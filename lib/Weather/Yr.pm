@@ -32,10 +32,11 @@ our $VERSION = '0.01';
         say $day->date . ':';
         say ' ' x 4 . 'Min. temperature = ' . $day->min_temperature->celsius;
         say ' ' x 4 . 'Max. temperature = ' . $day->max_temperature->celsius;
-        say '';
-    }
 
-    # ...and replacing "celsius" with "fahrenheit" or "kelvin" also works.
+        foreach my $dp ( @{$day->datapoints} ) {
+            say ' ' x 4 . 'Wind direction: ' . $dp->wind_direction->name;
+        }
+    }
 
 =head1 DESCRIPTION
 

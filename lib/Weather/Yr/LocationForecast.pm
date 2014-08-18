@@ -4,6 +4,7 @@ use namespace::autoclean;
 
 extends 'Weather::Yr::Base';
 
+use DateTime;
 use DateTime::Format::ISO8601;
 
 use Weather::Yr::LocationForecast::DataPoint;
@@ -24,6 +25,10 @@ use Weather::Yr::LocationForecast::Day;
 has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
 has 'datapoints' => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
 has 'days'       => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
+
+has 'now'        => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
+has 'today'      => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
+has 'tomorrow'   => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
 
 sub _build_url {
     my $self = shift;
@@ -166,6 +171,41 @@ sub _build_days {
     }
 
     return \@days;
+}
+
+sub _build_now {
+    my $self = shift;
+
+    my $datetime_now      = DateTime->now;
+    my $closest_datapoint = undef;
+
+    foreach my $dp ( @{$self->today->datapoints} ) {
+        unless ( $closest_datapoint ) {
+            $closest_datapoint = $dp;
+            next;
+        }
+
+        if ( $dp->from->epoch < $closest_datapoint->from->epoch ) {
+            $closest_datapoint = $dp;
+        }
+    }
+
+    return Weather::Yr::LocationForecast::Day->new(
+        date       => $closest_datapoint->from,
+        datapoints => [ $closest_datapoint ],
+    );
+}
+
+sub _build_today {
+    my $self = shift;
+
+    return $self->days->[0];
+}
+
+sub _build_tomorrow {
+    my $self = shift;
+
+    return $self->days->[1];
 }
 
 __PACKAGE__->meta->make_immutable;

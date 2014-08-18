@@ -5,6 +5,8 @@ use namespace::autoclean;
 extends 'Weather::Yr::Day';
 
 has 'temperatures'    => ( isa => 'ArrayRef[Weather::Yr::Model::Temperature]', is => 'ro', lazy_build => 1 );
+
+has 'temperature'     => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
 has 'min_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
 has 'max_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
 
@@ -22,6 +24,12 @@ sub _asc_sorted_temperatures {
     return [ sort {
         $a->celsius <=> $b->celsius
     } @{ $self->temperatures } ];
+}
+
+sub _build_temperature {
+    my $self = shift;
+
+    return $self->temperatures->[0];
 }
 
 sub _build_min_temperature {
