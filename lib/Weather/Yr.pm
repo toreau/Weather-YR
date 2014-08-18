@@ -38,6 +38,12 @@ our $VERSION = '0.01';
         }
     }
 
+    # If you are interested in the weather right now, instead:
+
+    my $now = $yr->location_forecast;
+
+    say "It's " . $now->temperature->celsius . "C outside.";
+
 =head1 DESCRIPTION
 
 ** THIS IS PRE-ALPHA! DO NOT USE IN PRODUCTION! INTERFACE WILL CHANGE! **
