@@ -53,8 +53,9 @@ sub _build_location_forecast {
     my $self = shift;
 
     return Weather::Yr::LocationForecast->new(
-        lat => $self->lat,
-        lon => $self->lon,
+        lat  => $self->lat,
+        lon  => $self->lon,
+        lang => $self->lang,
     );
 }
 
@@ -62,8 +63,9 @@ sub _build_text_location {
     my $self = shift;
 
     return Weather::Yr::TextLocation->new(
-        lat => $self->lat,
-        lon => $self->lon,
+        lat  => $self->lat,
+        lon  => $self->lon,
+        lang => $self->lang,
     );
 }
 

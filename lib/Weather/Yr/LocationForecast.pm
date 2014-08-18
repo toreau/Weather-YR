@@ -55,17 +55,20 @@ sub _build_datapoints {
             $datapoint = Weather::Yr::LocationForecast::DataPoint->new(
                 from => $from,
                 to   => $to,
+                lang => $self->lang,
                 type => $t->{datatype}->{value},
 
                 temperature => Weather::Yr::Model::Temperature->new(
                     from    => $from,
                     to      => $to,
+                    lang    => $self->lang,
                     celsius => $loc->{temperature}->{value}->{value},
                 ),
 
                 wind_direction => Weather::Yr::Model::WindDirection->new(
                     from    => $from,
                     to      => $to,
+                    lang    => $self->lang,
                     degrees => $loc->{windDirection}->{deg}->{value},
                     name    => $loc->{windDirection}->{name}->{value},
                 ),
@@ -73,6 +76,7 @@ sub _build_datapoints {
                 wind_speed => Weather::Yr::Model::WindSpeed->new(
                     from     => $from,
                     to       => $to,
+                    lang     => $self->lang,
                     mps      => $loc->{windSpeed}->{mps}->{value},
                     beaufort => $loc->{windSpeed}->{beaufort}->{value},
                     name     => $loc->{windSpeed}->{name}->{value},
@@ -81,18 +85,21 @@ sub _build_datapoints {
                 humidity => Weather::Yr::Model::Humidity->new(
                     from    => $from,
                     to      => $to,
+                    lang    => $self->lang,
                     percent => $loc->{humidity}->{value}->{value},
                 ),
 
                 pressure => Weather::Yr::Model::Pressure->new(
                     from => $from,
                     to   => $to,
+                    lang => $self->lang,
                     hPa  => $loc->{pressure}->{value}->{value},
                 ),
 
                 clouds => Weather::Yr::Model::Clouds->new(
                     from       => $from,
                     to         => $to,
+                    lang       => $self->lang,
                     cloudiness => $loc->{cloudiness}->{percent}->{value},
                     low        => $loc->{lowClouds}->{percent}->{value},
                     medium     => $loc->{mediumClouds}->{percent}->{value},
@@ -102,12 +109,14 @@ sub _build_datapoints {
                 fog => Weather::Yr::Model::Fog->new(
                     from    => $from,
                     to      => $to,
+                    lang    => $self->lang,
                     percent => $loc->{fog}->{percent}->{value},
                 ),
 
                 dewpoint => Weather::Yr::Model::Dewpoint->new(
                     from    => $from,
                     to      => $to,
+                    lang    => $self->lang,
                     celsius => $loc->{dewpointTemperature}->{value}->{value},
                 ),
             );
@@ -116,12 +125,14 @@ sub _build_datapoints {
             my $precipitation = Weather::Yr::Model::Precipitation->new(
                 from   => $from,
                 to     => $to,
+                lang   => $self->lang,
                 value  => $p->{value}->{value},
                 min    => $p->{minvalue}->{value},
                 max    => $p->{maxvalue}->{value},
                 symbol => Weather::Yr::Model::Precipitation::Symbol->new(
                     from   => $from,
                     to     => $to,
+                    lang   => $self->lang,
                     id     => $t->{location}->{symbol}->{id}->{value},
                     number => $t->{location}->{symbol}->{number}->{value},
                 ),
