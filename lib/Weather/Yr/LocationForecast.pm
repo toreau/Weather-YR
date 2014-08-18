@@ -180,14 +180,17 @@ sub _build_now {
     my $closest_datapoint = undef;
 
     foreach my $dp ( @{$self->today->datapoints} ) {
-        unless ( $closest_datapoint ) {
+        unless ( defined $closest_datapoint ) {
             $closest_datapoint = $dp;
             next;
         }
 
-        if ( $dp->from->epoch < $closest_datapoint->from->epoch ) {
+        my $diff_from_now = abs( $dp->from->epoch - $datetime_now->epoch );
+
+        if ( $diff_from_now < ( abs($closest_datapoint->from->epoch - $datetime_now->epoch) ) ) {
             $closest_datapoint = $dp;
         }
+
     }
 
     return Weather::Yr::LocationForecast::Day->new(
