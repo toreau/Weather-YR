@@ -70,6 +70,12 @@ sub _build_precipitations {
 sub _build_precipitation {
     my $self = shift;
 
+    foreach ( @{$self->precipitations} ) {
+        if ( $_->from->hour == 12 ) {
+            return $_;
+        }
+    }
+
     return $self->precipitations->[0];
 }
 
