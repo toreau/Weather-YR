@@ -43,6 +43,7 @@ our $VERSION = '0.01';
     my $now = $yr->location_forecast;
 
     say "It's " . $now->temperature->celsius . "C outside.";
+    say "Weather status: " . $now->temperature->precipitation->symbol->text;
 
 =head1 DESCRIPTION
 

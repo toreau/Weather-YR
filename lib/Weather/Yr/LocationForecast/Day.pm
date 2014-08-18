@@ -5,12 +5,13 @@ use namespace::autoclean;
 extends 'Weather::Yr::Day';
 
 has 'temperatures'    => ( isa => 'ArrayRef[Weather::Yr::Model::Temperature]', is => 'ro', lazy_build => 1 );
-
 has 'temperature'     => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
+
 has 'min_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
 has 'max_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
 
 has 'precipitations' => ( isa => 'ArrayRef[Weather::Yr::Model::Precipitation]', is => 'ro', lazy_build => 1 );
+has 'precipitation'  => ( isa => 'Weather::Yr::Model::Precipitation',           is => 'ro', lazy_build => 1 );
 
 sub _build_temperatures {
     my $self = shift;
@@ -58,7 +59,12 @@ sub _build_precipitations {
     }
 
     return \@precips;
+}
 
+sub _build_precipitation {
+    my $self = shift;
+
+    return $self->precipitations->[0];
 }
 
 __PACKAGE__->meta->make_immutable;
