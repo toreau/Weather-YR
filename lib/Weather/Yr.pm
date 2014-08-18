@@ -38,12 +38,16 @@ our $VERSION = '0.01';
         }
     }
 
-    # If you are interested in the weather right now, instead:
+    # If you are interested in the weather right now (*):
 
-    my $now = $yr->location_forecast;
+    my $now = $yr->location_forecast->now;
 
     say "It's " . $now->temperature->celsius . "C outside.";
     say "Weather status: " . $now->temperature->precipitation->symbol->text;
+
+    # (*) "Right now" is actually lying, as the data from Yr is always
+    #     a _forecast_, ie. what the weather will be like. The now()
+    #     method simply picks the closest one in time.
 
 =head1 DESCRIPTION
 
