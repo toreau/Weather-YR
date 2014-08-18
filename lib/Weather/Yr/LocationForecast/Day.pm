@@ -30,6 +30,12 @@ sub _asc_sorted_temperatures {
 sub _build_temperature {
     my $self = shift;
 
+    foreach ( @{$self->temperatures} ) {
+        if ( $_->from->hour == 12 ) {
+            return $_;
+        }
+    }
+
     return $self->temperatures->[0];
 }
 
