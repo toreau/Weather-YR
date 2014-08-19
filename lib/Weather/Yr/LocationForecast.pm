@@ -22,6 +22,17 @@ use Weather::Yr::Model::Precipitation::Symbol;
 
 use Weather::Yr::LocationForecast::Day;
 
+=head1 NAME
+
+Weather::Yr::LocationForecast - Object-oriented interface to Yr.no's "location
+forecast" API.
+
+=head1 DESCRIPTION
+
+Don't use this class directly. Instead, access it from the L<Weather::Yr> class.
+
+=cut
+
 has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
 has 'datapoints' => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
 has 'days'       => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
