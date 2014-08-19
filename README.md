@@ -49,6 +49,16 @@ This is an object-oriented interface to Yr.no's free weather service located at
 
 Returns a [Weather::Yr::LocationForecast](https://metacpan.org/pod/Weather::Yr::LocationForecast) instance.
 
+# TODO
+
+- Add time zone support.
+- Add support for more of Yr.no's APIs.
+
+# BUGS
+
+Please report any bugs or feature requests via the github interface at
+[https://github.com/toreau/Weather-Yr/issues](https://github.com/toreau/Weather-Yr/issues).
+
 # AUTHOR
 
 Tore Aursand, `toreau@gmail.com`
