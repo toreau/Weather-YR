@@ -22,10 +22,12 @@ our $VERSION = '0.01';
 =head1 SYNOPSIS
 
     use Weather::Yr;
+    use DateTime::TimeZone;
 
     my $yr = Weather::Yr->new(
         lat => 63.590833,
         lon => 10.741389,
+        tz  => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
     );
 
     foreach my $day ( @{$yr->location_forecast->days} ) {
