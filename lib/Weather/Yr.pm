@@ -59,7 +59,15 @@ L<http://api.yr.no/>.
 =cut
 
 has 'location_forecast' => ( isa => 'Weather::Yr::LocationForecast', is => 'ro', lazy_build => 1 );
-has 'text_location'     => ( isa => 'Weather::Yr::TextLocation',     is => 'ro', lazy_build => 1 );
+# has 'text_location'     => ( isa => 'Weather::Yr::TextLocation',     is => 'ro', lazy_build => 1 );
+
+=head1 METHODS
+
+=head2 location_forecast
+
+Returns a L<Weather::Yr::LocationForecast> instance.
+
+=cut
 
 sub _build_location_forecast {
     my $self = shift;
@@ -71,15 +79,15 @@ sub _build_location_forecast {
     );
 }
 
-sub _build_text_location {
-    my $self = shift;
+# sub _build_text_location {
+#     my $self = shift;
 
-    return Weather::Yr::TextLocation->new(
-        lat  => $self->lat,
-        lon  => $self->lon,
-        lang => $self->lang,
-    );
-}
+#     return Weather::Yr::TextLocation->new(
+#         lat  => $self->lat,
+#         lon  => $self->lon,
+#         lang => $self->lang,
+#     );
+# }
 
 __PACKAGE__->meta->make_immutable;
 
