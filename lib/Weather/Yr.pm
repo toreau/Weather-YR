@@ -61,6 +61,18 @@ L<http://api.yr.no/>.
 has 'location_forecast' => ( isa => 'Weather::Yr::LocationForecast', is => 'ro', lazy_build => 1 );
 # has 'text_location'     => ( isa => 'Weather::Yr::TextLocation',     is => 'ro', lazy_build => 1 );
 
+# around 'BUILDARGS' => sub {
+#     my $orig  = shift;
+#     my $class = shift;
+
+#     my %args = @_;
+
+#     # use Data::Dumper;
+#     # print STDERR Dumper( \%args );
+
+#     return $class->$orig( @_ );
+# };
+
 =head1 METHODS
 
 =head2 location_forecast
@@ -76,6 +88,7 @@ sub _build_location_forecast {
         lat  => $self->lat,
         lon  => $self->lon,
         lang => $self->lang,
+        tz   => $self->tz,
     );
 }
 

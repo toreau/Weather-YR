@@ -6,11 +6,13 @@ use LWP::UserAgent;
 use XML::Bare;
 use DateTime;
 use DateTime::Format::ISO8601;
+use DateTime::TimeZone;
 
 has 'lat'  => ( isa => 'Num', is => 'rw', required => 1 );
 has 'lon'  => ( isa => 'Num', is => 'rw', required => 1 );
 has 'msl'  => ( isa => 'Int', is => 'rw', required => 0, default => 0 );
 has 'lang' => ( isa => 'Str', is => 'rw', required => 0, default => 'nb' );
+has 'tz'   => ( isa => 'DateTime::TimeZone', is => 'rw', required => 0, default => sub { DateTime::TimeZone->new(name => 'UTC'); } );
 
 has 'ua' => ( isa => 'LWP::UserAgent', is => 'rw', default => sub { return LWP::UserAgent->new; } );
 
@@ -41,11 +43,15 @@ sub date_to_datetime {
     my $date = shift // '';
 
     if ( length $date ) {
-        return DateTime::Format::ISO8601->parse_datetime( $date );
+        $date = DateTime::Format::ISO8601->parse_datetime( $date );
     }
     else {
-        return DateTime->now;
+        $date = DateTime->now;
     }
+
+    $date->set_time_zone( $self->tz );
+
+    return $date;
 }
 
 

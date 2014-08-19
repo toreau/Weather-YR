@@ -36,6 +36,18 @@ sub _asc_sorted_temperatures {
     } @{ $self->temperatures } ];
 }
 
+sub _ok_hour {
+    my $self = shift;
+    my $hour = shift;
+
+    if ( defined $hour && ($hour >= 12 && $hour <= 15) ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 =head2 temperature
 
 Returns the "most logical" L<Weather::Yr::Model::Temperature> data point for
@@ -51,7 +63,7 @@ sub _build_temperature {
     my $self = shift;
 
     foreach ( @{$self->temperatures} ) {
-        if ( $_->from->hour == 12 ) {
+        if ( $self->_ok_hour($_->from->hour) ) {
             return $_;
         }
     }
@@ -123,7 +135,7 @@ sub _build_precipitation {
     my $self = shift;
 
     foreach ( @{$self->precipitations} ) {
-        if ( $_->from->hour == 12 ) {
+        if ( $self->_ok_hour($_->from->hour) ) {
             return $_;
         }
     }

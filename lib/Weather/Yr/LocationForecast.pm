@@ -228,7 +228,6 @@ sub _build_now {
         if ( $diff_from_now < ( abs($closest_datapoint->from->epoch - $datetime_now->epoch) ) ) {
             $closest_datapoint = $dp;
         }
-
     }
 
     return Weather::Yr::LocationForecast::Day->new(
@@ -266,6 +265,11 @@ sub _build_tomorrow {
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+=head1 BUGS
+
+Please report any bugs or feature requests via the github interface at
+L<https://github.com/toreau/Weather-Yr/issues>.
 
 =head1 AUTHOR
 
