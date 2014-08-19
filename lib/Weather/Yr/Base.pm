@@ -10,7 +10,7 @@ use DateTime::Format::ISO8601;
 has 'lat'  => ( isa => 'Num', is => 'rw', required => 1 );
 has 'lon'  => ( isa => 'Num', is => 'rw', required => 1 );
 has 'msl'  => ( isa => 'Int', is => 'rw', required => 0, default => 0 );
-has 'lang' => ( isa => 'Str', is => 'rw', required => 1, default => 'nb' );
+has 'lang' => ( isa => 'Str', is => 'rw', required => 0, default => 'nb' );
 
 has 'ua' => ( isa => 'LWP::UserAgent', is => 'rw', default => sub { return LWP::UserAgent->new; } );
 

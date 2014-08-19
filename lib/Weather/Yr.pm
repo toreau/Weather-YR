@@ -93,6 +93,21 @@ __PACKAGE__->meta->make_immutable;
 
 1;
 
+=head1 TODO
+
+=over 4
+
+=item * Add time zone support.
+
+=item * Add support for more of Yr.no's APIs.
+
+=back
+
+=head1 BUGS
+
+Please report any bugs or feature requests via the github interface at
+L<https://github.com/toreau/Weather-Yr/issues>.
+
 =head1 AUTHOR
 
 Tore Aursand, C<< toreau@gmail.com >>
