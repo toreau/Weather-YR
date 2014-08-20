@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 # VERSION
 
-Version 0.01.
+Version 0.30.
 
 # SYNOPSIS
 
