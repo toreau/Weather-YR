@@ -8,19 +8,18 @@ use DateTime;
 use DateTime::Format::ISO8601;
 
 use Weather::Yr::LocationForecast::DataPoint;
+use Weather::Yr::LocationForecast::Day;
 
+use Weather::Yr::Model::Clouds;
+use Weather::Yr::Model::Dewpoint;
+use Weather::Yr::Model::Fog;
+use Weather::Yr::Model::Humidity;
+use Weather::Yr::Model::Precipitation::Symbol;
+use Weather::Yr::Model::Precipitation;
+use Weather::Yr::Model::Pressure;
 use Weather::Yr::Model::Temperature;
 use Weather::Yr::Model::WindDirection;
 use Weather::Yr::Model::WindSpeed;
-use Weather::Yr::Model::Humidity;
-use Weather::Yr::Model::Pressure;
-use Weather::Yr::Model::Clouds;
-use Weather::Yr::Model::Fog;
-use Weather::Yr::Model::Dewpoint;
-use Weather::Yr::Model::Precipitation;
-use Weather::Yr::Model::Precipitation::Symbol;
-
-use Weather::Yr::LocationForecast::Day;
 
 =head1 NAME
 
@@ -214,25 +213,25 @@ closest forecast in time.
 sub _build_now {
     my $self = shift;
 
-    my $datetime_now      = DateTime->now;
-    my $closest_datapoint = undef;
+    my $now        = DateTime->now( time_zone => 'UTC' );
+    my $closest_dp = undef;
 
     foreach my $dp ( @{$self->today->datapoints} ) {
-        unless ( defined $closest_datapoint ) {
-            $closest_datapoint = $dp;
+        unless ( defined $closest_dp ) {
+            $closest_dp = $dp;
             next;
         }
 
-        my $diff_from_now = abs( $dp->from->epoch - $datetime_now->epoch );
+        my $diff_from_now = abs( $dp->from->epoch - $now->epoch );
 
-        if ( $diff_from_now < ( abs($closest_datapoint->from->epoch - $datetime_now->epoch) ) ) {
-            $closest_datapoint = $dp;
+        if ( $diff_from_now < ( abs($closest_dp->from->epoch - $now->epoch) ) ) {
+            $closest_dp = $dp;
         }
     }
 
     return Weather::Yr::LocationForecast::Day->new(
-        date       => $closest_datapoint->from,
-        datapoints => [ $closest_datapoint ],
+        date       => $closest_dp->from,
+        datapoints => [ $closest_dp ],
     );
 }
 
@@ -265,52 +264,3 @@ sub _build_tomorrow {
 __PACKAGE__->meta->make_immutable;
 
 1;
-
-=head1 BUGS
-
-Please report any bugs or feature requests via the github interface at
-L<https://github.com/toreau/Weather-Yr/issues>.
-
-=head1 AUTHOR
-
-Tore Aursand, C<< toreau@gmail.com >>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2014, Tore Aursand.
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the the Artistic License (2.0). You may obtain a
-copy of the full license at:
-
-L<http://www.perlfoundation.org/artistic_license_2_0>
-
-Any use, modification, and distribution of the Standard or Modified
-Versions is governed by this Artistic License. By using, modifying or
-distributing the Package, you accept this license. Do not use, modify,
-or distribute the Package, if you do not accept this license.
-
-If your Modified Version has been derived from a Modified Version made
-by someone other than you, you are nevertheless required to ensure that
-your Modified Version complies with the requirements of this license.
-
-This license does not grant you the right to use any trademark, service
-mark, tradename, or logo of the Copyright Holder.
-
-This license includes the non-exclusive, worldwide, free-of-charge
-patent license to make, have made, use, offer to sell, sell, import and
-otherwise transfer the Package with respect to any patent claims
-licensable by the Copyright Holder that are necessarily infringed by the
-Package. If you institute patent litigation (including a cross-claim or
-counterclaim) against any party alleging that the Package constitutes
-direct or contributory patent infringement, then this Artistic License
-to you shall terminate on the date that such litigation is filed.
-
-Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER
-AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.
-THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY
-YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
-CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
-CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

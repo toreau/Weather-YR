@@ -63,18 +63,6 @@ L<http://api.yr.no/>.
 has 'location_forecast' => ( isa => 'Weather::Yr::LocationForecast', is => 'ro', lazy_build => 1 );
 # has 'text_location'     => ( isa => 'Weather::Yr::TextLocation',     is => 'ro', lazy_build => 1 );
 
-# around 'BUILDARGS' => sub {
-#     my $orig  = shift;
-#     my $class = shift;
-
-#     my %args = @_;
-
-#     # use Data::Dumper;
-#     # print STDERR Dumper( \%args );
-
-#     return $class->$orig( @_ );
-# };
-
 =head1 METHODS
 
 =head2 location_forecast
@@ -114,7 +102,9 @@ __PACKAGE__->meta->make_immutable;
 
 =over 4
 
-=item * Add time zone support.
+=item * Improve the documentation.
+
+=item * Add more tests.
 
 =item * Add support for more of Yr.no's APIs.
 

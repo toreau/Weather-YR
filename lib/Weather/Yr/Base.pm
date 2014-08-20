@@ -12,12 +12,20 @@ has [ 'lat', 'lon', 'msl' ] => (
     isa      => 'Maybe[Num]',
     is       => 'rw',
     required => 0,
+    default  => 0,
 );
 
-has [ 'xml', 'lang' ] => (
+has 'xml' => (
     isa      => 'Maybe[Str]',
     is       => 'rw',
     required => 0,
+);
+
+has 'lang' => (
+    isa      => 'Maybe[Str]',
+    is       => 'rw',
+    required => 0,
+    default  => 'nb',
 );
 
 has 'tz' => (
