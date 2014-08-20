@@ -1,8 +1,8 @@
-package Weather::Yr::TextLocation;
+package Weather::YR::TextLocation;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Base';
+extends 'Weather::YR::Base';
 
 has 'language' => ( isa => 'Str', is => 'rw', default => 'nb' );
 

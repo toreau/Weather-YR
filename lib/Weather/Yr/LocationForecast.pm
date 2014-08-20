@@ -1,44 +1,44 @@
-package Weather::Yr::LocationForecast;
+package Weather::YR::LocationForecast;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Base';
+extends 'Weather::YR::Base';
 
 use DateTime;
 use DateTime::Format::ISO8601;
 
-use Weather::Yr::LocationForecast::DataPoint;
-use Weather::Yr::LocationForecast::Day;
+use Weather::YR::LocationForecast::DataPoint;
+use Weather::YR::LocationForecast::Day;
 
-use Weather::Yr::Model::Clouds;
-use Weather::Yr::Model::Dewpoint;
-use Weather::Yr::Model::Fog;
-use Weather::Yr::Model::Humidity;
-use Weather::Yr::Model::Precipitation::Symbol;
-use Weather::Yr::Model::Precipitation;
-use Weather::Yr::Model::Pressure;
-use Weather::Yr::Model::Temperature;
-use Weather::Yr::Model::WindDirection;
-use Weather::Yr::Model::WindSpeed;
+use Weather::YR::Model::Clouds;
+use Weather::YR::Model::Dewpoint;
+use Weather::YR::Model::Fog;
+use Weather::YR::Model::Humidity;
+use Weather::YR::Model::Precipitation::Symbol;
+use Weather::YR::Model::Precipitation;
+use Weather::YR::Model::Pressure;
+use Weather::YR::Model::Temperature;
+use Weather::YR::Model::WindDirection;
+use Weather::YR::Model::WindSpeed;
 
 =head1 NAME
 
-Weather::Yr::LocationForecast - Object-oriented interface to Yr.no's "location
+Weather::YR::LocationForecast - Object-oriented interface to Yr.no's "location
 forecast" API.
 
 =head1 DESCRIPTION
 
-Don't use this class directly. Instead, access it from the L<Weather::Yr> class.
+Don't use this class directly. Instead, access it from the L<Weather::YR> class.
 
 =cut
 
 has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
-has 'datapoints' => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
-has 'days'       => ( isa => 'ArrayRef[Weather::Yr::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
+has 'datapoints' => ( isa => 'ArrayRef[Weather::YR::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
+has 'days'       => ( isa => 'ArrayRef[Weather::YR::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
 
-has 'now'        => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
-has 'today'      => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
-has 'tomorrow'   => ( isa => 'Weather::Yr::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
+has 'now'        => ( isa => 'Weather::YR::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
+has 'today'      => ( isa => 'Weather::YR::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
+has 'tomorrow'   => ( isa => 'Weather::YR::LocationForecast::Day',                 is => 'ro', lazy_build => 1 );
 
 =head1 METHODS
 
@@ -56,7 +56,7 @@ sub _build_url {
 
 =head2 datapoints
 
-Returns an array reference of L<Weather::Yr::LocationForecast::DataPoint> instances.
+Returns an array reference of L<Weather::YR::LocationForecast::DataPoint> instances.
 
 =cut
 
@@ -81,20 +81,20 @@ sub _build_datapoints {
                 $datapoint = undef;
             }
 
-            $datapoint = Weather::Yr::LocationForecast::DataPoint->new(
+            $datapoint = Weather::YR::LocationForecast::DataPoint->new(
                 from => $from,
                 to   => $to,
                 lang => $self->lang,
                 type => $t->{datatype}->{value},
 
-                temperature => Weather::Yr::Model::Temperature->new(
+                temperature => Weather::YR::Model::Temperature->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
                     celsius => $loc->{temperature}->{value}->{value},
                 ),
 
-                wind_direction => Weather::Yr::Model::WindDirection->new(
+                wind_direction => Weather::YR::Model::WindDirection->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
@@ -102,7 +102,7 @@ sub _build_datapoints {
                     name    => $loc->{windDirection}->{name}->{value},
                 ),
 
-                wind_speed => Weather::Yr::Model::WindSpeed->new(
+                wind_speed => Weather::YR::Model::WindSpeed->new(
                     from     => $from,
                     to       => $to,
                     lang     => $self->lang,
@@ -111,21 +111,21 @@ sub _build_datapoints {
                     name     => $loc->{windSpeed}->{name}->{value},
                 ),
 
-                humidity => Weather::Yr::Model::Humidity->new(
+                humidity => Weather::YR::Model::Humidity->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
                     percent => $loc->{humidity}->{value}->{value},
                 ),
 
-                pressure => Weather::Yr::Model::Pressure->new(
+                pressure => Weather::YR::Model::Pressure->new(
                     from => $from,
                     to   => $to,
                     lang => $self->lang,
                     hPa  => $loc->{pressure}->{value}->{value},
                 ),
 
-                clouds => Weather::Yr::Model::Clouds->new(
+                clouds => Weather::YR::Model::Clouds->new(
                     from       => $from,
                     to         => $to,
                     lang       => $self->lang,
@@ -135,14 +135,14 @@ sub _build_datapoints {
                     high       => $loc->{highClouds}->{percent}->{value},
                 ),
 
-                fog => Weather::Yr::Model::Fog->new(
+                fog => Weather::YR::Model::Fog->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
                     percent => $loc->{fog}->{percent}->{value},
                 ),
 
-                dewpoint => Weather::Yr::Model::Dewpoint->new(
+                dewpoint => Weather::YR::Model::Dewpoint->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
@@ -151,14 +151,14 @@ sub _build_datapoints {
             );
         }
         elsif ( my $p = $t->{location}->{precipitation} ) {
-            my $precipitation = Weather::Yr::Model::Precipitation->new(
+            my $precipitation = Weather::YR::Model::Precipitation->new(
                 from   => $from,
                 to     => $to,
                 lang   => $self->lang,
                 value  => $p->{value}->{value},
                 min    => $p->{minvalue}->{value},
                 max    => $p->{maxvalue}->{value},
-                symbol => Weather::Yr::Model::Precipitation::Symbol->new(
+                symbol => Weather::YR::Model::Precipitation::Symbol->new(
                     from   => $from,
                     to     => $to,
                     lang   => $self->lang,
@@ -176,7 +176,7 @@ sub _build_datapoints {
 
 =head2 days
 
-Returns an array reference of L<Weather::Yr::LocationForecast::Day> instances.
+Returns an array reference of L<Weather::YR::LocationForecast::Day> instances.
 
 =cut
 
@@ -192,7 +192,7 @@ sub _build_days {
     my @days = ();
 
     foreach my $date ( sort keys %day_datapoints ) {
-        my $day = Weather::Yr::LocationForecast::Day->new(
+        my $day = Weather::YR::LocationForecast::Day->new(
             date       => DateTime::Format::ISO8601->parse_datetime( $date ),
             datapoints => $day_datapoints{ $date },
         );
@@ -205,7 +205,7 @@ sub _build_days {
 
 =head2 now
 
-Returns a L<Weather::Yr::LocationForecast::Day> instance, representing the
+Returns a L<Weather::YR::LocationForecast::Day> instance, representing the
 closest forecast in time.
 
 =cut
@@ -229,7 +229,7 @@ sub _build_now {
         }
     }
 
-    return Weather::Yr::LocationForecast::Day->new(
+    return Weather::YR::LocationForecast::Day->new(
         date       => $closest_dp->from,
         datapoints => [ $closest_dp ],
     );
@@ -237,7 +237,7 @@ sub _build_now {
 
 =head2 today
 
-Returns a L<Weather::Yr::LocationForecast::Day> instance, representing today's
+Returns a L<Weather::YR::LocationForecast::Day> instance, representing today's
 weather.
 
 =cut
@@ -250,7 +250,7 @@ sub _build_today {
 
 =head2 tomorrow
 
-Returns a L<Weather::Yr::LocationForecast::Day> instance, representing
+Returns a L<Weather::YR::LocationForecast::Day> instance, representing
 tomorrow's weather.
 
 =cut

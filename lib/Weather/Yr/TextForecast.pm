@@ -1,8 +1,8 @@
-package Weather::Yr::TextForecast;
+package Weather::YR::TextForecast;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Base';
+extends 'Weather::YR::Base';
 
 __PACKAGE__->meta->make_immutable;
 

@@ -9,9 +9,9 @@ use Test::More;
 plan tests => 1;
 
 BEGIN {
-    use_ok( 'Weather::Yr' );
+    use_ok( 'Weather::YR' );
 }
 
-diag( "Testing Weather::Yr $Weather::Yr::VERSION, Perl $], $^X" );
+diag( "Testing Weather::YR $Weather::YR::VERSION, Perl $], $^X" );
 
 done_testing;

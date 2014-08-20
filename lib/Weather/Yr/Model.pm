@@ -1,4 +1,4 @@
-package Weather::Yr::Model;
+package Weather::YR::Model;
 use Moose;
 use namespace::autoclean;
 

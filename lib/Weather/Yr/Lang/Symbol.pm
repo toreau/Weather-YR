@@ -1,4 +1,4 @@
-package Weather::Yr::Lang::Symbol;
+package Weather::YR::Lang::Symbol;
 use Moose;
 use namespace::autoclean;
 

@@ -1,17 +1,17 @@
-package Weather::Yr::LocationForecast::DataPoint;
+package Weather::YR::LocationForecast::DataPoint;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::DataPoint';
+extends 'Weather::YR::DataPoint';
 
-has 'temperature'    => ( isa => 'Weather::Yr::Model::Temperature',   is => 'rw', required => 1 );
-has 'wind_direction' => ( isa => 'Weather::Yr::Model::WindDirection', is => 'rw', required => 1 );
-has 'wind_speed'     => ( isa => 'Weather::Yr::Model::WindSpeed',     is => 'rw', required => 1 );
-has 'humidity'       => ( isa => 'Weather::Yr::Model::Humidity',      is => 'rw', required => 1 );
-has 'pressure'       => ( isa => 'Weather::Yr::Model::Pressure',      is => 'rw', required => 1 );
-has 'clouds'         => ( isa => 'Weather::Yr::Model::Clouds',        is => 'rw', required => 1 );
+has 'temperature'    => ( isa => 'Weather::YR::Model::Temperature',   is => 'rw', required => 1 );
+has 'wind_direction' => ( isa => 'Weather::YR::Model::WindDirection', is => 'rw', required => 1 );
+has 'wind_speed'     => ( isa => 'Weather::YR::Model::WindSpeed',     is => 'rw', required => 1 );
+has 'humidity'       => ( isa => 'Weather::YR::Model::Humidity',      is => 'rw', required => 1 );
+has 'pressure'       => ( isa => 'Weather::YR::Model::Pressure',      is => 'rw', required => 1 );
+has 'clouds'         => ( isa => 'Weather::YR::Model::Clouds',        is => 'rw', required => 1 );
 
-has 'precipitations' => ( isa => 'ArrayRef[Weather::Yr::Model::Precipitation]', is => 'rw', required => 0, default => sub { [] } );
+has 'precipitations' => ( isa => 'ArrayRef[Weather::YR::Model::Precipitation]', is => 'rw', required => 0, default => sub { [] } );
 
 sub add_precipitation {
     my $self = shift;

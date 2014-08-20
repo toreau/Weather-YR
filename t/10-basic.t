@@ -8,9 +8,9 @@ use Test::More;
 
 plan tests => 1;
 
-use Weather::Yr;
+use Weather::YR;
 
-my $yr = Weather::Yr->new(
+my $yr = Weather::YR->new(
     lat => 63.590833,
     lon => 10.741389,
 );

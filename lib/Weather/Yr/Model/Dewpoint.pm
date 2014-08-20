@@ -1,8 +1,8 @@
-package Weather::Yr::Model::Dewpoint;
+package Weather::YR::Model::Dewpoint;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model::Temperature';
+extends 'Weather::YR::Model::Temperature';
 
 has '+celsius' => ( isa => 'Maybe[Num]', is => 'rw', required => 1 );
 

@@ -1,8 +1,8 @@
-package Weather::Yr::Model::Humidity;
+package Weather::YR::Model::Humidity;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model';
+extends 'Weather::YR::Model';
 
 has 'percent' => ( isa => 'Maybe[Num]', is => 'rw', required => 1 );
 

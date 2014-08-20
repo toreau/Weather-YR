@@ -1,8 +1,8 @@
-package Weather::Yr::Model::Pressure;
+package Weather::YR::Model::Pressure;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model';
+extends 'Weather::YR::Model';
 
 has 'hPa' => ( isa => 'Num', is => 'rw', required => 1 );
 

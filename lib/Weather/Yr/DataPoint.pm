@@ -1,4 +1,4 @@
-package Weather::Yr::DataPoint;
+package Weather::YR::DataPoint;
 use Moose;
 use namespace::autoclean;
 

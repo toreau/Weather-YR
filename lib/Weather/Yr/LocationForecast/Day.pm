@@ -1,23 +1,23 @@
-package Weather::Yr::LocationForecast::Day;
+package Weather::YR::LocationForecast::Day;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Day';
+extends 'Weather::YR::Day';
 
-has 'temperatures'    => ( isa => 'ArrayRef[Weather::Yr::Model::Temperature]', is => 'ro', lazy_build => 1 );
-has 'temperature'     => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
+has 'temperatures'    => ( isa => 'ArrayRef[Weather::YR::Model::Temperature]', is => 'ro', lazy_build => 1 );
+has 'temperature'     => ( isa => 'Weather::YR::Model::Temperature',           is => 'ro', lazy_build => 1 );
 
-has 'min_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
-has 'max_temperature' => ( isa => 'Weather::Yr::Model::Temperature',           is => 'ro', lazy_build => 1 );
+has 'min_temperature' => ( isa => 'Weather::YR::Model::Temperature',           is => 'ro', lazy_build => 1 );
+has 'max_temperature' => ( isa => 'Weather::YR::Model::Temperature',           is => 'ro', lazy_build => 1 );
 
-has 'precipitations' => ( isa => 'ArrayRef[Weather::Yr::Model::Precipitation]', is => 'ro', lazy_build => 1 );
-has 'precipitation'  => ( isa => 'Weather::Yr::Model::Precipitation',           is => 'ro', lazy_build => 1 );
+has 'precipitations' => ( isa => 'ArrayRef[Weather::YR::Model::Precipitation]', is => 'ro', lazy_build => 1 );
+has 'precipitation'  => ( isa => 'Weather::YR::Model::Precipitation',           is => 'ro', lazy_build => 1 );
 
 =head1 METHODS
 
 =head2 temperatures
 
-Returns an array reference of all the L<Weather::Yr::Model::Temperature>
+Returns an array reference of all the L<Weather::YR::Model::Temperature>
 data points for this day.
 
 =cut
@@ -50,7 +50,7 @@ sub _ok_hour {
 
 =head2 temperature
 
-Returns the "most logical" L<Weather::Yr::Model::Temperature> data point for
+Returns the "most logical" L<Weather::YR::Model::Temperature> data point for
 this day.
 
 This works so that if you are working with "now", it will pick the data point
@@ -73,7 +73,7 @@ sub _build_temperature {
 
 =head2 min_temperature
 
-Returns the L<Weather::Yr::Model::Temperature> data point with the lowest
+Returns the L<Weather::YR::Model::Temperature> data point with the lowest
 temperature value for this day.
 
 =cut
@@ -86,7 +86,7 @@ sub _build_min_temperature {
 
 =head2 min_temperature
 
-Returns the L<Weather::Yr::Model::Temperature> data point with the highest
+Returns the L<Weather::YR::Model::Temperature> data point with the highest
 temperature value for this day.
 
 =cut
@@ -99,7 +99,7 @@ sub _build_max_temperature {
 
 =head2 precipitations
 
-Returns an array reference of all the L<Weather::Yr::Model::Precipitation>
+Returns an array reference of all the L<Weather::YR::Model::Precipitation>
 data points for this day.
 
 =cut
@@ -122,7 +122,7 @@ sub _build_precipitations {
 
 =head2 precipitation
 
-Returns "the most logical" L<Weather::Yr::Model::Precipitation> data point
+Returns "the most logical" L<Weather::YR::Model::Precipitation> data point
 for this day.
 
 This works so that if you are working with "now", it will pick the data point

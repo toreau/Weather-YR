@@ -1,10 +1,10 @@
-package Weather::Yr::Model::Precipitation::Symbol;
+package Weather::YR::Model::Precipitation::Symbol;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model';
+extends 'Weather::YR::Model';
 
-use Weather::Yr::Lang::Symbol;
+use Weather::YR::Lang::Symbol;
 
 has 'id'     => ( isa => 'Str', is => 'rw', required => 1 );
 has 'number' => ( isa => 'Int', is => 'rw', required => 1 );
@@ -14,7 +14,7 @@ has 'text'   => ( isa => 'Str', is => 'ro', lazy_build => 1 );
 sub _build_text {
     my $self = shift;
 
-    return Weather::Yr::Lang::Symbol->new(
+    return Weather::YR::Lang::Symbol->new(
         number => $self->number,
         lang   => $self->lang,
     )->text;

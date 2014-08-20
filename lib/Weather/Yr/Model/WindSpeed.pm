@@ -1,8 +1,8 @@
-package Weather::Yr::Model::WindSpeed;
+package Weather::YR::Model::WindSpeed;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model';
+extends 'Weather::YR::Model';
 
 has 'mps'      => ( isa => 'Num', is => 'rw', required => 1 );
 has 'beaufort' => ( isa => 'Num', is => 'rw', required => 1 );

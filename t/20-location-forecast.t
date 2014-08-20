@@ -12,11 +12,11 @@ use DateTime::TimeZone;
 use File::Slurp;
 use FindBin;
 
-use Weather::Yr;
+use Weather::YR;
 
 my $xml = File::Slurp::read_file( $FindBin::Bin . '/data/locationForecast.xml' );
 
-my $yr = Weather::Yr->new(
+my $yr = Weather::YR->new(
     xml => $xml,
     tz  => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
 );

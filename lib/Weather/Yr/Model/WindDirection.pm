@@ -1,8 +1,8 @@
-package Weather::Yr::Model::WindDirection;
+package Weather::YR::Model::WindDirection;
 use Moose;
 use namespace::autoclean;
 
-extends 'Weather::Yr::Model';
+extends 'Weather::YR::Model';
 
 has 'degrees' => ( isa => 'Num', is => 'rw', required => 1 );
 has 'name'    => ( isa => 'Str', is => 'rw', required => 1 );
