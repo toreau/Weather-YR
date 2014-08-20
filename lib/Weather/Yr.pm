@@ -89,6 +89,8 @@ sub _build_location_forecast {
     return Weather::Yr::LocationForecast->new(
         lat  => $self->lat,
         lon  => $self->lon,
+        msl  => $self->msl,
+        xml  => $self->xml,
         lang => $self->lang,
         tz   => $self->tz,
     );
