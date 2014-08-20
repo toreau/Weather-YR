@@ -54,6 +54,10 @@ sub _build_xml_ref {
     unless ( length $self->xml ) {
         my $response = $self->ua->get( $self->url );
 
+        if ( $self->can('status_code') ) {
+            $self->status_code( $response->code );
+        }
+
         if ( $response->is_success ) {
             $self->xml( $response->decoded_content );
         }

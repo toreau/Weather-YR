@@ -32,6 +32,8 @@ Don't use this class directly. Instead, access it from the L<Weather::YR> class.
 
 =cut
 
+has 'status_code' => ( isa => 'Num', is => 'rw', required => 0 );
+
 has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
 has 'datapoints' => ( isa => 'ArrayRef[Weather::YR::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
 has 'days'       => ( isa => 'ArrayRef[Weather::YR::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
