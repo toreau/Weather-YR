@@ -17,6 +17,8 @@ use Weather::YR::Model::Humidity;
 use Weather::YR::Model::Precipitation::Symbol;
 use Weather::YR::Model::Precipitation;
 use Weather::YR::Model::Pressure;
+use Weather::YR::Model::Probability::Temperature;
+use Weather::YR::Model::Probability::Wind;
 use Weather::YR::Model::Temperature;
 use Weather::YR::Model::WindDirection;
 use Weather::YR::Model::WindSpeed;
@@ -149,6 +151,20 @@ sub _build_datapoints {
                     to      => $to,
                     lang    => $self->lang,
                     celsius => $loc->{dewpointTemperature}->{value}->{value},
+                ),
+
+                temperature_probability => Weather::YR::Model::Probability::Temperature->new(
+                    from => $from,
+                    to   => $to,
+                    lang => $self->lang,
+                    value => $loc->{temperatureProbability}->{value}->{value},
+                ),
+
+                wind_probability => Weather::YR::Model::Probability::Wind->new(
+                    from => $from,
+                    to   => $to,
+                    lang => $self->lang,
+                    value => $loc->{windProbability}->{value}->{value},
                 ),
             );
         }
