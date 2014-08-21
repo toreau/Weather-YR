@@ -9,7 +9,9 @@ has 'wind_direction'          => ( isa => 'Weather::YR::Model::WindDirection',  
 has 'wind_speed'              => ( isa => 'Weather::YR::Model::WindSpeed',                is => 'ro', required => 1 );
 has 'humidity'                => ( isa => 'Weather::YR::Model::Humidity',                 is => 'ro', required => 1 );
 has 'pressure'                => ( isa => 'Weather::YR::Model::Pressure',                 is => 'ro', required => 1 );
-has 'clouds'                  => ( isa => 'Weather::YR::Model::Clouds',                   is => 'ro', required => 1 );
+has 'cloudiness'              => ( isa => 'Weather::YR::Model::Cloudiness',               is => 'ro', required => 1 );
+has 'fog'                     => ( isa => 'Weather::YR::Model::Fog',                      is => 'ro', required => 1 );
+has 'dew_point_temperature'   => ( isa => 'Weather::YR::Model::DewPointTemperature',      is => 'ro', required => 1 );
 has 'temperature_probability' => ( isa => 'Weather::YR::Model::Probability::Temperature', is => 'ro', required => 1 );
 has 'wind_probability'        => ( isa => 'Weather::YR::Model::Probability::Wind',        is => 'ro', required => 1 );
 

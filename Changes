@@ -4,6 +4,10 @@ Revision history for Perl extension Weather::YR.
     - Added support for accessing wind directions and wind speeds for any
       given day.
     - Added support for accessing humidity for any given day.
+    - Added support for accessing (air) pressure for any given day.
+    - Added support for accessing cloudiness for any given day.
+    - Added support for accessing fog for any given day.
+    - Added support for accessing dew point temperature for any given day.
     - Added support for accessing wind and temperature probability for any
       given data point.
 

@@ -1,4 +1,4 @@
-package Weather::YR::Model::Dewpoint;
+package Weather::YR::Model::DewPointTemperature;
 use Moose;
 use namespace::autoclean;
 

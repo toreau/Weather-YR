@@ -116,9 +116,15 @@ Please report any bugs or feature requests via the web interface at
 L<https://rt.cpan.org/Public/Dist/Display.html?Name=Weather-YR>, or via
 the github interface at L<https://github.com/toreau/Weather-YR/issues>.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Tore Aursand, C<< toreau@gmail.com >>
+=over 4
+
+=item * Tore Aursand, 2014-, C<< toreau@gmail.com >>
+
+=item * Knut-Olav Hoven, 2008-2014, C<< knut-olav@hoven.ws >>
+
+=back
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -10,8 +10,8 @@ use DateTime::Format::ISO8601;
 use Weather::YR::LocationForecast::DataPoint;
 use Weather::YR::LocationForecast::Day;
 
-use Weather::YR::Model::Clouds;
-use Weather::YR::Model::Dewpoint;
+use Weather::YR::Model::Cloudiness;
+use Weather::YR::Model::DewPointTemperature;
 use Weather::YR::Model::Fog;
 use Weather::YR::Model::Humidity;
 use Weather::YR::Model::Precipitation::Symbol;
@@ -129,14 +129,11 @@ sub _build_datapoints {
                     hPa  => $loc->{pressure}->{value}->{value},
                 ),
 
-                clouds => Weather::YR::Model::Clouds->new(
-                    from       => $from,
-                    to         => $to,
-                    lang       => $self->lang,
-                    cloudiness => $loc->{cloudiness}->{percent}->{value},
-                    low        => $loc->{lowClouds}->{percent}->{value},
-                    medium     => $loc->{mediumClouds}->{percent}->{value},
-                    high       => $loc->{highClouds}->{percent}->{value},
+                cloudiness => Weather::YR::Model::Cloudiness->new(
+                    from    => $from,
+                    to      => $to,
+                    lang    => $self->lang,
+                    percent => $loc->{cloudiness}->{percent}->{value},
                 ),
 
                 fog => Weather::YR::Model::Fog->new(
@@ -146,7 +143,7 @@ sub _build_datapoints {
                     percent => $loc->{fog}->{percent}->{value},
                 ),
 
-                dewpoint => Weather::YR::Model::Dewpoint->new(
+                dew_point_temperature => Weather::YR::Model::DewPointTemperature->new(
                     from    => $from,
                     to      => $to,
                     lang    => $self->lang,
