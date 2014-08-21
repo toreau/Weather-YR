@@ -1,0 +1,43 @@
+Revision history for Perl extension Weather::YR.
+
+0.31  2014-08-21
+    - Added support for accessing wind directions and wind speeds for any
+      given day.
+    - Added support for accessing wind and temperature probability for any
+      given data point.
+
+0.30  2014-08-20
+    - Module rewritten from scratch for better extensibility.
+
+0.25  2012-01-20
+    - Fix: CPAN issue #74112: Misuse of length on array.
+
+0.24  2011-12-18
+    - Fix: YR API Location Forecast updated to version 1.8.
+    - Fix: YR API Text Forecast updated to version 1.5.
+
+0.23  2010-05-13
+    - Fix: Missing dependency declaration on Class::Accessor::Fast.
+    - Fix: Configuration overrides were leaking when multiple forecast modules are used.
+
+0.22  2008-05-29
+    - Fix: Added prerequisites to Makefile.PL.
+
+0.21  2008-05-26
+    - Fix: Wrong package names in SEE ALSO.
+    - Fix: Missing SYNOPSIS of central packages.
+
+0.20  2008-05-24
+    - Rebranded from YR to Weather::YR.
+
+0.11  2008-04-30
+    - Added LICENSE file for GPL2.
+    - Updated README file.
+    - Added YR library version to web client user agent.
+
+0.10  2008-04-30
+    - Support for web service locationforecast.
+    - Support for web service textforecast.
+
+0.01  2008-03-17
+    - original version; created by h2xs 1.23 with options -X -n YR.
