@@ -4,23 +4,31 @@ use namespace::autoclean;
 
 extends 'Weather::YR::Day';
 
+# Temperature
 has 'temperatures'    => ( isa => 'ArrayRef[Weather::YR::Model::Temperature]', is => 'ro', lazy_build => 1 );
 has 'temperature'     => ( isa => 'Weather::YR::Model::Temperature', is => 'ro', lazy_build => 1 );
-
 has 'min_temperature' => ( isa => 'Weather::YR::Model::Temperature', is => 'ro', lazy_build => 1 );
 has 'max_temperature' => ( isa => 'Weather::YR::Model::Temperature', is => 'ro', lazy_build => 1 );
 
+# Precipitation
 has 'precipitations' => ( isa => 'ArrayRef[Weather::YR::Model::Precipitation]', is => 'ro', lazy_build => 1 );
 has 'precipitation'  => ( isa => 'Weather::YR::Model::Precipitation', is => 'ro', lazy_build => 1 );
 
+# Wind direction
 has 'wind_directions' => ( isa => 'ArrayRef[Weather::YR::Model::WindDirection]', is => 'ro', lazy_build => 1 );
 has 'wind_direction'  => ( isa => 'Weather::YR::Model::WindDirection', is => 'ro', lazy_build => 1 );
 
+# Wind speed
 has 'wind_speeds' => ( isa => 'ArrayRef[Weather::YR::Model::WindSpeed]', is => 'ro', lazy_build => 1 );
 has 'wind_speed'  => ( isa => 'Weather::YR::Model::WindSpeed', is => 'ro', lazy_build => 1 );
-
 has 'max_wind_speed'  => ( isa => 'Weather::YR::Model::WindSpeed', is => 'ro', lazy_build => 1 );
 has 'min_wind_speed'  => ( isa => 'Weather::YR::Model::WindSpeed', is => 'ro', lazy_build => 1 );
+
+# Humidity
+has 'humidities' => ( isa => 'ArrayRef[Weather::YR::Model::Humidity]', is => 'ro', lazy_build => 1 );
+has 'humidity' => ( isa => 'Weather::YR::Model::Humidity', is => 'ro', lazy_build => 1 );
+has 'max_humidity' => ( isa => 'Weather::YR::Model::Humidity', is => 'ro', lazy_build => 1 );
+has 'min_humidity' => ( isa => 'Weather::YR::Model::Humidity', is => 'ro', lazy_build => 1 );
 
 =head1 METHODS
 
@@ -65,7 +73,7 @@ Returns the "most logical" L<Weather::YR::Model::Temperature> data point for
 this day.
 
 This works so that if you are working with "now", it will pick the data point
-closes to the current time. If you are working with any other days, including
+closest to the current time. If you are working with any other days, including
 "today", it will return the noon data point.
 
 =cut
@@ -137,7 +145,7 @@ Returns "the most logical" L<Weather::YR::Model::Precipitation> data point
 for this day.
 
 This works so that if you are working with "now", it will pick the data point
-closes to the current time. If you are working with any other days, including
+closest to the current time. If you are working with any other days, including
 "today", it will return the noon data point.
 
 =cut
@@ -173,7 +181,7 @@ Returns "the most logical" L<Weather::YR::Model::WindDirection> data point
 for this day.
 
 This works so that if you are working with "now", it will pick the data point
-closes to the current time. If you are working with any other days, including
+closest to the current time. If you are working with any other days, including
 "today", it will return the noon data point.
 
 =cut
@@ -203,13 +211,21 @@ sub _build_wind_speeds {
     return [ map { $_->wind_speed } @{$self->datapoints} ];
 }
 
+sub _asc_sorted_wind_speeds {
+    my $self = shift;
+
+    return [ sort {
+        $a->mps <=> $b->mps
+    } @{ $self->wind_speeds } ];
+}
+
 =head2 wind_speed
 
 Returns "the most logical" L<Weather::YR::Model::WindSpeed> data point
 for this day.
 
 This works so that if you are working with "now", it will pick the data point
-closes to the current time. If you are working with any other days, including
+closest to the current time. If you are working with any other days, including
 "today", it will return the noon data point.
 
 =cut
@@ -224,14 +240,6 @@ sub _build_wind_speed {
     }
 
     return $self->wind_speed->[0];
-}
-
-sub _asc_sorted_wind_speeds {
-    my $self = shift;
-
-    return [ sort {
-        $a->mps <=> $b->mps
-    } @{ $self->wind_speeds } ];
 }
 
 =head2 min_wind_speed
@@ -258,6 +266,76 @@ sub _build_max_wind_speed {
     my $self = shift;
 
     return $self->_asc_sorted_wind_speeds->[-1];
+}
+
+=head2 humidities
+
+Returns an array reference of L<Weather::YR::Model::WindSpeed> data points
+for this day.
+
+=cut
+
+sub _build_humidities {
+    my $self = shift;
+
+    return [ map { $_->humidity } @{$self->datapoints} ];
+}
+
+sub _asc_sorted_humidities {
+    my $self = shift;
+
+    return [ sort {
+        $a->percent <=> $b->percent
+    } @{ $self->humidities } ];
+}
+
+=head2 humidity
+
+Returns "the most logical" L<Weather::YR::Model::Humidity> data point
+for this day.
+
+This works so that if you are working with "now", it will pick the data point
+closest to the current time. If you are working with any other days, including
+"today", it will return the noon data point.
+
+=cut
+
+sub _build_humidity {
+    my $self = shift;
+
+    foreach ( @{$self->humidities} ) {
+        if ( $self->_ok_hour($_->from->hour) ) {
+            return $_;
+        }
+    }
+
+    return $self->humidities->[0];
+}
+
+=head2 min_humidity
+
+Returns the L<Weather::YR::Model::Humidity> data point with the lowest
+humidity value for this day.
+
+=cut
+
+sub _build_min_humidity {
+    my $self = shift;
+
+    return $self->_asc_sorted_humidities->[0];
+}
+
+=head2 max_humidity
+
+Returns the L<Weather::YR::Model::Humidity> data point with the highest
+humidity value for this day.
+
+=cut
+
+sub _build_max_humidity {
+    my $self = shift;
+
+    return $self->_asc_sorted_humidities->[-1];
 }
 
 __PACKAGE__->meta->make_immutable;
