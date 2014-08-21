@@ -13,7 +13,24 @@ has 'max_temperature' => ( isa => 'Weather::YR::Model::Temperature',           i
 has 'precipitations' => ( isa => 'ArrayRef[Weather::YR::Model::Precipitation]', is => 'ro', lazy_build => 1 );
 has 'precipitation'  => ( isa => 'Weather::YR::Model::Precipitation',           is => 'ro', lazy_build => 1 );
 
+has 'wind_directions' => ( isa => 'ArrayRef[Weather::YR::Model::WindDirection]', is => 'ro', lazy_build => 1 );
+has 'wind_direction'  => ( isa => 'Weather::YR::Model::WindDirection',           is => 'ro', lazy_build => 1 );
+
 =head1 METHODS
+
+=cut
+
+sub _ok_hour {
+    my $self = shift;
+    my $hour = shift;
+
+    if ( defined $hour && ($hour >= 12 && $hour <= 15) ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
 =head2 temperatures
 
@@ -34,18 +51,6 @@ sub _asc_sorted_temperatures {
     return [ sort {
         $a->celsius <=> $b->celsius
     } @{ $self->temperatures } ];
-}
-
-sub _ok_hour {
-    my $self = shift;
-    my $hour = shift;
-
-    if ( defined $hour && ($hour >= 12 && $hour <= 15) ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
 }
 
 =head2 temperature
@@ -141,6 +146,42 @@ sub _build_precipitation {
     }
 
     return $self->precipitations->[0];
+}
+
+=head2 wind_directions
+
+Returns an array reference of L<Weather::YR::Model::WindDirection> data points
+for this day.
+
+=cut
+
+sub _build_wind_directions {
+    my $self = shift;
+
+    return [ map { $_->wind_direction } @{$self->datapoints} ];
+}
+
+=head2 wind_direction
+
+Returns "the most logical" L<Weather::YR::Model::WindDirection> data point
+for this day.
+
+This works so that if you are working with "now", it will pick the data point
+closes to the current time. If you are working with any other days, including
+"today", it will return the noon data point.
+
+=cut
+
+sub _build_wind_direction {
+    my $self = shift;
+
+    foreach ( @{$self->wind_directions} ) {
+        if ( $self->_ok_hour($_->from->hour) ) {
+            return $_;
+        }
+    }
+
+    return $self->wind_directions->[0];
 }
 
 __PACKAGE__->meta->make_immutable;
