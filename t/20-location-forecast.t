@@ -12,7 +12,7 @@ use FindBin;
 
 use Weather::YR;
 
-plan tests => 6;
+plan tests => 9;
 
 my $xml = File::Slurp::read_file( $FindBin::Bin . '/data/locationForecast.xml' );
 
@@ -33,6 +33,10 @@ is( $forecast->today->max_temperature->celsius, '15.4', 'Max. temperature is OK.
 
 is( $forecast->today->wind_direction->name, 'NW', 'Wind direction is OK.' );
 is( $forecast->today->wind_direction->degrees, '297.0', 'Wind direction in degrees is OK.' );
+
+is( $forecast->today->wind_speed->mps, '2.0', 'Wind speed is OK.' );
+is( $forecast->today->min_wind_speed->mps, '2.0', 'Max. wind speed is OK.' );
+is( $forecast->today->max_wind_speed->mps, '4.1', 'Max. wind speed is OK.' );
 
 # The End
 done_testing;

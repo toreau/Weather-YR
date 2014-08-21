@@ -13,7 +13,7 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 =head1 VERSION
 
-Version 0.30.
+Version 0.31.
 
 =cut
 
@@ -112,8 +112,9 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 BUGS
 
-Please report any bugs or feature requests via the github interface at
-L<https://github.com/toreau/Weather-YR/issues>.
+Please report any bugs or feature requests via the web interface at
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Weather-YR>, or via
+the github interface at L<https://github.com/toreau/Weather-YR/issues>.
 
 =head1 AUTHOR
 
