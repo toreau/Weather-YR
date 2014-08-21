@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 # VERSION
 
-Version 0.30.
+Version 0.31.
 
 # SYNOPSIS
 
@@ -59,12 +59,14 @@ Returns a [Weather::YR::LocationForecast](https://metacpan.org/pod/Weather::YR::
 
 # BUGS
 
-Please report any bugs or feature requests via the github interface at
-[https://github.com/toreau/Weather-YR/issues](https://github.com/toreau/Weather-YR/issues).
+Please report any bugs or feature requests via the web interface at
+[https://rt.cpan.org/Public/Dist/Display.html?Name=Weather-YR](https://rt.cpan.org/Public/Dist/Display.html?Name=Weather-YR), or via
+the github interface at [https://github.com/toreau/Weather-YR/issues](https://github.com/toreau/Weather-YR/issues).
 
-# AUTHOR
+# AUTHORS
 
-Tore Aursand, `toreau@gmail.com`
+- Tore Aursand, 2014-, `toreau@gmail.com`
+- Knut-Olav Hoven, 2008-2014, `knut-olav@hoven.ws`
 
 # LICENSE AND COPYRIGHT
 

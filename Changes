@@ -1,6 +1,7 @@
 Revision history for Perl extension Weather::YR.
 
 0.31  2014-08-21
+    - Weather::YR now requires Perl version 5.10 or later.
     - Added support for accessing wind directions and wind speeds for any
       given day.
     - Added support for accessing humidity for any given day.
