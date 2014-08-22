@@ -1,5 +1,8 @@
 Revision history for Perl extension Weather::YR.
 
+0.32  2014-08-22
+    - Improved the documentation.
+
 0.31  2014-08-21
     - Weather::YR now requires Perl version 5.10 or later.
     - Added support for accessing wind directions and wind speeds for any
@@ -46,4 +49,4 @@ Revision history for Perl extension Weather::YR.
     - Support for web service textforecast.
 
 0.01  2008-03-17
-    - original version; created by h2xs 1.23 with options -X -n YR.
+    - Original version.

@@ -4,6 +4,17 @@ use namespace::autoclean;
 
 extends 'Weather::YR::Day';
 
+=head1 NAME
+
+Weather::YR::LocationForecast::Day - Class that holds weather data for one day.
+
+=head1 DESCRIPTION
+
+Don't use this class directly. Instead, access it via L<Weather::YR> and
+L<Weather::YR::LocationForecast>.
+
+=cut
+
 # Temperature
 has 'temperatures'    => ( isa => 'ArrayRef[Weather::YR::Model::Temperature]', is => 'ro', lazy_build => 1 );
 has 'temperature'     => ( isa => 'Weather::YR::Model::Temperature',           is => 'ro', lazy_build => 1 );
@@ -41,6 +52,9 @@ has 'dew_point_temperatures'    => ( isa => 'ArrayRef[Weather::YR::Model::DewPoi
 has 'dew_point_temperature'     => ( isa => 'Weather::YR::Model::DewPointTemperature',           is => 'ro', lazy_build => 1 );
 
 =head1 METHODS
+
+This class inherits all the methods from L<Weather::YR::Day> and provides the
+following new methods:
 
 =cut
 
