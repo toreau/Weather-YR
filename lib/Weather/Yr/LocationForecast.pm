@@ -48,7 +48,24 @@ has 'tomorrow'   => ( isa => 'Weather::YR::LocationForecast::Day',              
 
 =head2 url
 
-Returns the URL for Yr.no's location forecast service.
+Returns the URL for YR.no's location forecast service. This is handy if you
+want to retrieve the XML from YR.no yourself;
+
+    my $yr = Weather::YR->new(
+        lat => 63.590833,
+        lon => 10.741389,
+    );
+
+    my $url = $yr->location_forecast->url;
+
+    my $xml = My FancyHttpClient->new->get( $url );
+
+    my $yr = Weather::YR->new(
+        xml => $xml,
+        tz  => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
+    );
+
+    my $forecast = $yr->location_forecast;
 
 =cut
 
