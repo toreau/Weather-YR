@@ -108,6 +108,8 @@ __PACKAGE__->meta->make_immutable;
 
 =item * Add support for more of Yr.no's APIs.
 
+=item * Translate wind speed names/descriptions.
+
 =back
 
 =head1 BUGS

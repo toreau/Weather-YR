@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 # VERSION
 
-Version 0.31.
+Version 0.32.
 
 # SYNOPSIS
 
@@ -56,6 +56,7 @@ Returns a [Weather::YR::LocationForecast](https://metacpan.org/pod/Weather::YR::
 - Improve the documentation.
 - Add more tests.
 - Add support for more of Yr.no's APIs.
+- Translate wind speed names/descriptions.
 
 # BUGS
 
