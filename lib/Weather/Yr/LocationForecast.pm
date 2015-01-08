@@ -37,6 +37,7 @@ Don't use this class directly. Instead, access it from the L<Weather::YR> class.
 has 'status_code' => ( isa => 'Num', is => 'rw', required => 0 );
 
 has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
+has 'schema_url' => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
 has 'datapoints' => ( isa => 'ArrayRef[Weather::YR::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
 has 'days'       => ( isa => 'ArrayRef[Weather::YR::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
 
@@ -48,7 +49,7 @@ has 'tomorrow'   => ( isa => 'Weather::YR::LocationForecast::Day',              
 
 =head2 url
 
-Returns the URL for YR.no's location forecast service. This is handy if you
+Returns the URL to YR.no's location forecast service. This is handy if you
 want to retrieve the XML from YR.no yourself;
 
     my $yr = Weather::YR->new(
@@ -73,6 +74,17 @@ sub _build_url {
     my $self = shift;
 
     return 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' . $self->lat . ';lon=' . $self->lon . ';msl=' . $self->msl;
+}
+
+=head2 schema_url
+
+Returns the URL to YR.no' location forecast service XML schema. This is used
+internally for validating the XML output from YR.no itself.
+
+=cut
+
+sub _build_schema_url {
+    return 'http://api.met.no/weatherapi/locationforecast/1.9/schema';
 }
 
 =head2 datapoints

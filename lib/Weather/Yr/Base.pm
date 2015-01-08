@@ -7,6 +7,7 @@ use DateTime::TimeZone;
 use DateTime;
 use LWP::UserAgent;
 use XML::Bare;
+use XML::LibXML;
 
 has [ 'lat', 'lon', 'msl' ] => (
     isa      => 'Maybe[Num]',
@@ -63,7 +64,35 @@ sub _build_xml_ref {
         }
     }
 
-    return XML::Bare->new( text => $self->xml )->parse;
+    if ( length $self->xml ) {
+        if ( $self->can('schema_url') ) {
+            eval {
+                my $xml_doc = XML::LibXML->new->load_xml( string => $self->xml );
+                my $schema  = XML::LibXML::Schema->new( location => $self->schema_url );
+
+                $schema->validate( $xml_doc );
+            };
+
+            if ( $@ ) {
+                warn "Failed to validate the XML returned from YR.no using schema URL '" . $self->schema_url . "'; $@";
+            }
+            else {
+                my $result = undef;
+
+                eval {
+                    $result = XML::Bare->new( text => $self->xml )->parse;
+                };
+
+                unless ( $@ ) {
+                    return $result;
+                }
+            }
+        }
+
+    }
+
+    # Something failed!
+    return undef;
 }
 
 sub date_to_datetime {
