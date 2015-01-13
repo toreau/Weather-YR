@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 # VERSION
 
-Version 0.32.
+Version 0.34.
 
 # SYNOPSIS
 
@@ -39,8 +39,6 @@ Version 0.32.
 
 # DESCRIPTION
 
-\*\* THIS IS PRE-ALPHA! DO NOT USE IN PRODUCTION! INTERFACE WILL CHANGE! \*\*
-
 This is an object-oriented interface to Yr.no's free weather service located at
 [http://api.yr.no/](http://api.yr.no/).
 
@@ -65,12 +63,12 @@ the github interface at [https://github.com/toreau/Weather-YR/issues](https://gi
 
 # AUTHORS
 
-- Tore Aursand, 2014-, `toreau@gmail.com`
+- Tore Aursand, 2014-2015, `toreau@gmail.com`
 - Knut-Olav Hoven, 2008-2014, `knut-olav@hoven.ws`
 
 # LICENSE AND COPYRIGHT
 
-Copyright 2014, ABC Startsiden.
+Copyright 2014-2015, ABC Startsiden.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
