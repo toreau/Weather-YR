@@ -96,122 +96,124 @@ Returns an array reference of L<Weather::YR::LocationForecast::DataPoint> instan
 sub _build_datapoints {
     my $self = shift;
 
-    my $xml_ref    = $self->xml_ref;
-    my $times      = $xml_ref->{weatherdata}->{product}->{time} || [];
-    my $datapoint  = undef;
     my @datapoints = ();
 
-    foreach my $t ( @{$times} ) {
+    if ( my $xml_ref = $self->xml_ref ) {
+        my $times     = $xml_ref->{weatherdata}->{product}->{time} || [];
+        my $datapoint = undef;
 
-        my $from = $self->date_to_datetime( $t->{from}->{value} );
-        my $to   = $self->date_to_datetime( $t->{to  }->{value} );
+        foreach my $t ( @{$times} ) {
 
-        if ( $t->{location}->{temperature} ) {
-            my $loc = $t->{location};
+            my $from = $self->date_to_datetime( $t->{from}->{value} );
+            my $to   = $self->date_to_datetime( $t->{to  }->{value} );
 
-            if ( defined $datapoint ) {
-                push( @datapoints, $datapoint );
-                $datapoint = undef;
+            if ( $t->{location}->{temperature} ) {
+                my $loc = $t->{location};
+
+                if ( defined $datapoint ) {
+                    push( @datapoints, $datapoint );
+                    $datapoint = undef;
+                }
+
+                $datapoint = Weather::YR::LocationForecast::DataPoint->new(
+                    from => $from,
+                    to   => $to,
+                    lang => $self->lang,
+                    type => $t->{datatype}->{value},
+
+                    temperature => Weather::YR::Model::Temperature->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        celsius => $loc->{temperature}->{value}->{value},
+                    ),
+
+                    wind_direction => Weather::YR::Model::WindDirection->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        degrees => $loc->{windDirection}->{deg}->{value},
+                        name    => $loc->{windDirection}->{name}->{value},
+                    ),
+
+                    wind_speed => Weather::YR::Model::WindSpeed->new(
+                        from     => $from,
+                        to       => $to,
+                        lang     => $self->lang,
+                        mps      => $loc->{windSpeed}->{mps}->{value},
+                        beaufort => $loc->{windSpeed}->{beaufort}->{value},
+                        name     => $loc->{windSpeed}->{name}->{value},
+                    ),
+
+                    humidity => Weather::YR::Model::Humidity->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        percent => $loc->{humidity}->{value}->{value},
+                    ),
+
+                    pressure => Weather::YR::Model::Pressure->new(
+                        from => $from,
+                        to   => $to,
+                        lang => $self->lang,
+                        hPa  => $loc->{pressure}->{value}->{value},
+                    ),
+
+                    cloudiness => Weather::YR::Model::Cloudiness->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        percent => $loc->{cloudiness}->{percent}->{value},
+                    ),
+
+                    fog => Weather::YR::Model::Fog->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        percent => $loc->{fog}->{percent}->{value},
+                    ),
+
+                    dew_point_temperature => Weather::YR::Model::DewPointTemperature->new(
+                        from    => $from,
+                        to      => $to,
+                        lang    => $self->lang,
+                        celsius => $loc->{dewpointTemperature}->{value}->{value},
+                    ),
+
+                    temperature_probability => Weather::YR::Model::Probability::Temperature->new(
+                        from => $from,
+                        to   => $to,
+                        lang => $self->lang,
+                        value => $loc->{temperatureProbability}->{value}->{value},
+                    ),
+
+                    wind_probability => Weather::YR::Model::Probability::Wind->new(
+                        from => $from,
+                        to   => $to,
+                        lang => $self->lang,
+                        value => $loc->{windProbability}->{value}->{value},
+                    ),
+                );
             }
-
-            $datapoint = Weather::YR::LocationForecast::DataPoint->new(
-                from => $from,
-                to   => $to,
-                lang => $self->lang,
-                type => $t->{datatype}->{value},
-
-                temperature => Weather::YR::Model::Temperature->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    celsius => $loc->{temperature}->{value}->{value},
-                ),
-
-                wind_direction => Weather::YR::Model::WindDirection->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    degrees => $loc->{windDirection}->{deg}->{value},
-                    name    => $loc->{windDirection}->{name}->{value},
-                ),
-
-                wind_speed => Weather::YR::Model::WindSpeed->new(
-                    from     => $from,
-                    to       => $to,
-                    lang     => $self->lang,
-                    mps      => $loc->{windSpeed}->{mps}->{value},
-                    beaufort => $loc->{windSpeed}->{beaufort}->{value},
-                    name     => $loc->{windSpeed}->{name}->{value},
-                ),
-
-                humidity => Weather::YR::Model::Humidity->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    percent => $loc->{humidity}->{value}->{value},
-                ),
-
-                pressure => Weather::YR::Model::Pressure->new(
-                    from => $from,
-                    to   => $to,
-                    lang => $self->lang,
-                    hPa  => $loc->{pressure}->{value}->{value},
-                ),
-
-                cloudiness => Weather::YR::Model::Cloudiness->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    percent => $loc->{cloudiness}->{percent}->{value},
-                ),
-
-                fog => Weather::YR::Model::Fog->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    percent => $loc->{fog}->{percent}->{value},
-                ),
-
-                dew_point_temperature => Weather::YR::Model::DewPointTemperature->new(
-                    from    => $from,
-                    to      => $to,
-                    lang    => $self->lang,
-                    celsius => $loc->{dewpointTemperature}->{value}->{value},
-                ),
-
-                temperature_probability => Weather::YR::Model::Probability::Temperature->new(
-                    from => $from,
-                    to   => $to,
-                    lang => $self->lang,
-                    value => $loc->{temperatureProbability}->{value}->{value},
-                ),
-
-                wind_probability => Weather::YR::Model::Probability::Wind->new(
-                    from => $from,
-                    to   => $to,
-                    lang => $self->lang,
-                    value => $loc->{windProbability}->{value}->{value},
-                ),
-            );
-        }
-        elsif ( my $p = $t->{location}->{precipitation} ) {
-            my $precipitation = Weather::YR::Model::Precipitation->new(
-                from   => $from,
-                to     => $to,
-                lang   => $self->lang,
-                value  => $p->{value}->{value},
-                min    => $p->{minvalue}->{value},
-                max    => $p->{maxvalue}->{value},
-                symbol => Weather::YR::Model::Precipitation::Symbol->new(
+            elsif ( my $p = $t->{location}->{precipitation} ) {
+                my $precipitation = Weather::YR::Model::Precipitation->new(
                     from   => $from,
                     to     => $to,
                     lang   => $self->lang,
-                    id     => $t->{location}->{symbol}->{id}->{value},
-                    number => $t->{location}->{symbol}->{number}->{value},
-                ),
-            );
+                    value  => $p->{value}->{value},
+                    min    => $p->{minvalue}->{value},
+                    max    => $p->{maxvalue}->{value},
+                    symbol => Weather::YR::Model::Precipitation::Symbol->new(
+                        from   => $from,
+                        to     => $to,
+                        lang   => $self->lang,
+                        id     => $t->{location}->{symbol}->{id}->{value},
+                        number => $t->{location}->{symbol}->{number}->{value},
+                    ),
+                );
 
-            $datapoint->add_precipitation( $precipitation );
+                $datapoint->add_precipitation( $precipitation );
+            }
         }
     }
 

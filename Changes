@@ -1,5 +1,9 @@
 Revision history for Perl extension Weather::YR.
 
+0.34  2015-01-13
+    - Better error-handling when creating datapoints.
+    - Removed alpha status; current API is OK to use in production.
+
 0.33  2015-01-08
     - Added XML schema validation for location forecast.
 

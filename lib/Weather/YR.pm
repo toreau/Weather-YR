@@ -13,11 +13,11 @@ Weather::YR - Object-oriented interface to YR.no's weather service.
 
 =head1 VERSION
 
-Version 0.33.
+Version 0.34.
 
 =cut
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 =head1 SYNOPSIS
 
@@ -51,8 +51,6 @@ our $VERSION = '0.33';
     #     method simply picks the closest one in time.
 
 =head1 DESCRIPTION
-
-** THIS IS PRE-ALPHA! DO NOT USE IN PRODUCTION! INTERFACE WILL CHANGE! **
 
 This is an object-oriented interface to Yr.no's free weather service located at
 L<http://api.yr.no/>.
