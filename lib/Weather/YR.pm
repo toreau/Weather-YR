@@ -9,15 +9,15 @@ use Weather::YR::TextLocation;
 
 =head1 NAME
 
-Weather::YR - Object-oriented interface to YR.no's weather service.
+Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 =head1 VERSION
 
-Version 0.34.
+Version 0.35.
 
 =cut
 
-our $VERSION = '0.34';
+our $VERSION = '0.36';
 
 =head1 SYNOPSIS
 
@@ -48,7 +48,7 @@ our $VERSION = '0.34';
 
     # (*) "Right now" is actually lying, as the data from Yr is always
     #     a _forecast_, ie. what the weather will be like. The now()
-    #     method simply picks the closest one in time.
+    #     method simply picks the closest data point in time.
 
 =head1 DESCRIPTION
 
@@ -78,6 +78,7 @@ sub _build_location_forecast {
         xml  => $self->xml,
         lang => $self->lang,
         tz   => $self->tz,
+        ua   => $self->ua,
     );
 }
 

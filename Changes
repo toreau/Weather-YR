@@ -1,5 +1,13 @@
 Revision history for Perl extension Weather::YR.
 
+0.36  2015-04-17
+    - Fix: Pass on the 'ua' parameter to Weather::Yr::Base when instantiating
+      the YR object.
+
+0.35  2015-02-12
+    - The 'ua' parameter can now be anything, as long as it is compatible
+      with the LWP::UserAgent API.
+
 0.34  2015-01-13
     - Better error-handling when creating datapoints.
     - Removed alpha status; current API is OK to use in production.

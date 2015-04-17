@@ -37,7 +37,7 @@ has 'tz' => (
 );
 
 has 'ua' => (
-    isa      => 'LWP::UserAgent',
+    isa      => 'Object',
     is       => 'rw',
     required => 0,
     default  => sub { LWP::UserAgent->new; },
