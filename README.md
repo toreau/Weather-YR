@@ -1,10 +1,10 @@
 # NAME
 
-Weather::YR - Object-oriented interface to YR.no's weather service.
+Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 # VERSION
 
-Version 0.34.
+Version 0.37.
 
 # SYNOPSIS
 
@@ -35,12 +35,12 @@ Version 0.34.
 
     # (*) "Right now" is actually lying, as the data from Yr is always
     #     a _forecast_, ie. what the weather will be like. The now()
-    #     method simply picks the closest one in time.
+    #     method simply picks the closest data point in time.
 
 # DESCRIPTION
 
 This is an object-oriented interface to Yr.no's free weather service located at
-[http://api.yr.no/](http://api.yr.no/).
+[https://api.met.no/](https://api.met.no/).
 
 # METHODS
 
@@ -63,12 +63,12 @@ the github interface at [https://github.com/toreau/Weather-YR/issues](https://gi
 
 # AUTHORS
 
-- Tore Aursand, 2014-2015, `toreau@gmail.com`
+- Tore Aursand, 2014-2016, `toreau@gmail.com`
 - Knut-Olav Hoven, 2008-2014, `knut-olav@hoven.ws`
 
 # LICENSE AND COPYRIGHT
 
-Copyright 2014-2015, ABC Startsiden.
+Copyright 2014-2016, ABC Startsiden.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
