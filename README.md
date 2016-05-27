@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 # VERSION
 
-Version 0.37.
+Version 0.38.
 
 # SYNOPSIS
 
@@ -31,7 +31,7 @@ Version 0.37.
     my $now = $yr->location_forecast->now;
 
     say "It's " . $now->temperature->celsius . "C outside.";
-    say "Weather status: " . $now->temperature->precipitation->symbol->text;
+    say "Weather status: " . $now->precipitation->symbol->text;
 
     # (*) "Right now" is actually lying, as the data from Yr is always
     #     a _forecast_, ie. what the weather will be like. The now()
