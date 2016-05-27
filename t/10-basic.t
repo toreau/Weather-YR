@@ -16,7 +16,7 @@ my $yr = Weather::YR->new(
 );
 
 # Make sure that the API URLs are correct.
-is( $yr->location_forecast->url, 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=63.590833;lon=10.741389;msl=0', 'URL for location forecast is OK.' );
+is( $yr->location_forecast->url, $yr->service_url->to_string . '/weatherapi/locationforecast/1.9/?lat=63.590833&lon=10.741389&msl=0', 'URL for location forecast is OK.' );
 
 # The End
 done_testing;

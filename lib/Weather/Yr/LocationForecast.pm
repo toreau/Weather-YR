@@ -6,6 +6,7 @@ extends 'Weather::YR::Base';
 
 use DateTime;
 use DateTime::Format::ISO8601;
+use Mojo::URL;
 
 use Weather::YR::LocationForecast::DataPoint;
 use Weather::YR::LocationForecast::Day;
@@ -36,8 +37,8 @@ Don't use this class directly. Instead, access it from the L<Weather::YR> class.
 
 has 'status_code' => ( isa => 'Num', is => 'rw', required => 0 );
 
-has 'url'        => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
-has 'schema_url' => ( isa => 'Str',                                                is => 'ro', lazy_build => 1 );
+has 'url'        => ( isa => 'Mojo::URL',                                          is => 'ro', lazy_build => 1 );
+has 'schema_url' => ( isa => 'Mojo::URL',                                          is => 'ro', lazy_build => 1 );
 has 'datapoints' => ( isa => 'ArrayRef[Weather::YR::LocationForecast::DataPoint]', is => 'ro', lazy_build => 1 );
 has 'days'       => ( isa => 'ArrayRef[Weather::YR::LocationForecast::Day]',       is => 'ro', lazy_build => 1 );
 
@@ -73,7 +74,12 @@ want to retrieve the XML from YR.no yourself;
 sub _build_url {
     my $self = shift;
 
-    return 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' . $self->lat . ';lon=' . $self->lon . ';msl=' . $self->msl;
+    my $url = $self->service_url;
+    $url->path ( '/weatherapi/locationforecast/1.9/' );
+    $url->query( lat => $self->lat, lon => $self->lon, msl => $self->msl );
+
+    return $url;
+    # return 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' . $self->lat . ';lon=' . $self->lon . ';msl=' . $self->msl;
 }
 
 =head2 schema_url
@@ -84,7 +90,12 @@ internally for validating the XML output from YR.no itself.
 =cut
 
 sub _build_schema_url {
-    return 'http://api.met.no/weatherapi/locationforecast/1.9/schema';
+    my $self = shift;
+
+    my $url = $self->service_url;
+    $url->path( '/weatherapi/locationforecast/1.9/schema' );
+
+    return $url;
 }
 
 =head2 datapoints
@@ -99,13 +110,16 @@ sub _build_datapoints {
     my @datapoints = ();
 
     if ( my $xml_ref = $self->xml_ref ) {
-        my $times     = $xml_ref->{weatherdata}->{product}->{time} || [];
+        # use Data::Dumper;
+        # print STDOUT Dumper( $xml_ref );
+        # die;
+        # my $times     = $xml_ref->{weatherdata}->{product}->{time} || [];
+        my $times     = $xml_ref->{product}->{time} || [];
         my $datapoint = undef;
 
         foreach my $t ( @{$times} ) {
-
-            my $from = $self->date_to_datetime( $t->{from}->{value} );
-            my $to   = $self->date_to_datetime( $t->{to  }->{value} );
+            my $from = $self->date_to_datetime( $t->{from} );
+            my $to   = $self->date_to_datetime( $t->{to  } );
 
             if ( $t->{location}->{temperature} ) {
                 my $loc = $t->{location};
@@ -119,79 +133,79 @@ sub _build_datapoints {
                     from => $from,
                     to   => $to,
                     lang => $self->lang,
-                    type => $t->{datatype}->{value},
+                    type => $t->{datatype},
 
                     temperature => Weather::YR::Model::Temperature->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        celsius => $loc->{temperature}->{value}->{value},
+                        celsius => $loc->{temperature}->{value},
                     ),
 
                     wind_direction => Weather::YR::Model::WindDirection->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        degrees => $loc->{windDirection}->{deg}->{value},
-                        name    => $loc->{windDirection}->{name}->{value},
+                        degrees => $loc->{windDirection}->{deg},
+                        name    => $loc->{windDirection}->{name},
                     ),
 
                     wind_speed => Weather::YR::Model::WindSpeed->new(
                         from     => $from,
                         to       => $to,
                         lang     => $self->lang,
-                        mps      => $loc->{windSpeed}->{mps}->{value},
-                        beaufort => $loc->{windSpeed}->{beaufort}->{value},
-                        name     => $loc->{windSpeed}->{name}->{value},
+                        mps      => $loc->{windSpeed}->{mps},
+                        beaufort => $loc->{windSpeed}->{beaufort},
+                        name     => $loc->{windSpeed}->{name},
                     ),
 
                     humidity => Weather::YR::Model::Humidity->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        percent => $loc->{humidity}->{value}->{value},
+                        percent => $loc->{humidity}->{value},
                     ),
 
                     pressure => Weather::YR::Model::Pressure->new(
                         from => $from,
                         to   => $to,
                         lang => $self->lang,
-                        hPa  => $loc->{pressure}->{value}->{value},
+                        hPa  => $loc->{pressure}->{value},
                     ),
 
                     cloudiness => Weather::YR::Model::Cloudiness->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        percent => $loc->{cloudiness}->{percent}->{value},
+                        percent => $loc->{cloudiness}->{percent},
                     ),
 
                     fog => Weather::YR::Model::Fog->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        percent => $loc->{fog}->{percent}->{value},
+                        percent => $loc->{fog}->{percent},
                     ),
 
                     dew_point_temperature => Weather::YR::Model::DewPointTemperature->new(
                         from    => $from,
                         to      => $to,
                         lang    => $self->lang,
-                        celsius => $loc->{dewpointTemperature}->{value}->{value},
+                        celsius => $loc->{dewpointTemperature}->{value},
                     ),
 
                     temperature_probability => Weather::YR::Model::Probability::Temperature->new(
                         from => $from,
                         to   => $to,
                         lang => $self->lang,
-                        value => $loc->{temperatureProbability}->{value}->{value},
+                        value => $loc->{temperatureProbability}->{value},
                     ),
 
                     wind_probability => Weather::YR::Model::Probability::Wind->new(
                         from => $from,
                         to   => $to,
                         lang => $self->lang,
-                        value => $loc->{windProbability}->{value}->{value},
+                        value => $loc->{windProbability}->{value},
                     ),
                 );
             }
@@ -200,21 +214,24 @@ sub _build_datapoints {
                     from   => $from,
                     to     => $to,
                     lang   => $self->lang,
-                    value  => $p->{value}->{value},
-                    min    => $p->{minvalue}->{value},
-                    max    => $p->{maxvalue}->{value},
+                    value  => $p->{value},
+                    min    => $p->{minvalue},
+                    max    => $p->{maxvalue},
                     symbol => Weather::YR::Model::Precipitation::Symbol->new(
                         from   => $from,
                         to     => $to,
                         lang   => $self->lang,
-                        id     => $t->{location}->{symbol}->{id}->{value},
-                        number => $t->{location}->{symbol}->{number}->{value},
+                        id     => $t->{location}->{symbol}->{id},
+                        number => $t->{location}->{symbol}->{number},
                     ),
                 );
 
                 $datapoint->add_precipitation( $precipitation );
             }
         }
+    }
+    else {
+        warn "No XML to generate forecast from!";
     }
 
     return \@datapoints;

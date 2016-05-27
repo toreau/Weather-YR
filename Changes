@@ -1,5 +1,10 @@
 Revision history for Perl extension Weather::YR.
 
+0.47  2016-05-27
+    - Changed to use the new end point URL; http://api.met.no/
+    - Replaced XML::Bare with XML::Simple.
+    - Misc. code cleanup.
+
 0.36  2015-04-17
     - Fix: Pass on the 'ua' parameter to Weather::Yr::Base when instantiating
       the YR object.

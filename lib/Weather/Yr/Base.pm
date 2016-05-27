@@ -6,8 +6,16 @@ use DateTime::Format::ISO8601;
 use DateTime::TimeZone;
 use DateTime;
 use LWP::UserAgent;
-use XML::Bare;
+use Mojo::URL;
 use XML::LibXML;
+use XML::Simple;
+
+has 'service_url' => (
+    isa     => 'Mojo::URL',
+    is      => 'ro',
+    lazy    => 1,
+    default => sub { Mojo::URL->new('http://api.met.no') },
+);
 
 has [ 'lat', 'lon', 'msl' ] => (
     isa      => 'Maybe[Num]',
@@ -53,7 +61,7 @@ sub _build_xml_ref {
     my $self = shift;
 
     unless ( length $self->xml ) {
-        my $response = $self->ua->get( $self->url );
+        my $response = $self->ua->get( $self->url->to_string );
 
         if ( $self->can('status_code') ) {
             $self->status_code( $response->code );
@@ -61,6 +69,9 @@ sub _build_xml_ref {
 
         if ( $response->is_success ) {
             $self->xml( $response->decoded_content );
+        }
+        else {
+            warn "Failed to GET data from " . $self->url->to_string;
         }
     }
 
@@ -80,7 +91,8 @@ sub _build_xml_ref {
                 my $result = undef;
 
                 eval {
-                    $result = XML::Bare->new( text => $self->xml )->parse;
+                    # $result = XML::Bare->new( text => $self->xml )->parse;
+                    $result = XML::Simple::XMLin( $self->xml, ForceArray => 0 );
                 };
 
                 unless ( $@ ) {
@@ -88,7 +100,9 @@ sub _build_xml_ref {
                 }
             }
         }
-
+    }
+    else {
+        warn "No XML to parse!";
     }
 
     # Something failed!
