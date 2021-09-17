@@ -75,11 +75,11 @@ sub _build_url {
     my $self = shift;
 
     my $url = $self->service_url;
-    $url->path ( '/weatherapi/locationforecast/1.9/' );
-    $url->query( lat => $self->lat, lon => $self->lon, msl => $self->msl );
+    $url->path ( '/weatherapi/locationforecast/2.0/classic' );
+    $url->query( lat => $self->lat, lon => $self->lon, altitude => $self->msl );
 
     return $url;
-    # return 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' . $self->lat . ';lon=' . $self->lon . ';msl=' . $self->msl;
+    # return 'https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=' . $self->lat . ';lon=' . $self->lon . ';altitude=' . $self->msl;
 }
 
 =head2 schema_url
@@ -93,7 +93,7 @@ sub _build_schema_url {
     my $self = shift;
 
     my $url = $self->service_url;
-    $url->path( '/weatherapi/locationforecast/1.9/schema' );
+    $url->path( '/weatherapi/locationforecast/2.0/schema' );
 
     return $url;
 }
