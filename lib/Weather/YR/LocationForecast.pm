@@ -74,7 +74,7 @@ want to retrieve the XML from YR.no yourself;
 sub _build_url {
     my $self = shift;
 
-    my $url = $self->service_url;
+    my $url = $self->service_url->clone;
     $url->path ( '/weatherapi/locationforecast/2.0/classic' );
     $url->query( lat => $self->lat, lon => $self->lon, altitude => $self->msl );
 
@@ -92,7 +92,7 @@ internally for validating the XML output from YR.no itself.
 sub _build_schema_url {
     my $self = shift;
 
-    my $url = $self->service_url;
+    my $url = $self->service_url->clone;
     $url->path( '/weatherapi/locationforecast/2.0/schema' );
 
     return $url;
