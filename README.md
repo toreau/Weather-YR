@@ -68,8 +68,11 @@ the github interface at [https://github.com/toreau/Weather-YR/issues](https://gi
 # AUTHORS
 
 - Tore Aursand, 2014-2021, `toreau@gmail.com`
-- Mike Katasonov, 2021, `kabanoid@cpan.org`
-- Knut-Olav Hoven, 2008-2014, `knut-olav@hoven.ws`
+- Knut-Olav Hoven, 2008-2013, `knut-olav@hoven.ws`
+
+# CONTRIBUTORS
+
+- Andreas Vögele
 
 # LICENSE AND COPYRIGHT
 

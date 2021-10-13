@@ -3,6 +3,7 @@ Revision history for Perl extension Weather::YR.
 0.42  2021-10-13
       - Use Dist::Zilla::Plugin::ReadmeAnyFromPod to generate the README at
         build time.
+      - Updated AUTHORS and CONTRIBUTORS section with correct information.
 
 0.41  2021-10-13
       - Updated the README with the correct documentation.

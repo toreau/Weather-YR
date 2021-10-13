@@ -126,9 +126,15 @@ the github interface at L<https://github.com/toreau/Weather-YR/issues>.
 
 =item * Tore Aursand, 2014-2021, C<< toreau@gmail.com >>
 
-=item * Mike Katasonov, 2021, C<< kabanoid@cpan.org >>
+=item * Knut-Olav Hoven, 2008-2013, C<< knut-olav@hoven.ws >>
 
-=item * Knut-Olav Hoven, 2008-2014, C<< knut-olav@hoven.ws >>
+=back
+
+=head1 CONTRIBUTORS
+
+=over 4
+
+=item * Andreas Vögele
 
 =back
 
