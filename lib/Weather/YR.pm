@@ -23,11 +23,15 @@ our $VERSION = '0.38';
 
     use Weather::YR;
     use DateTime::TimeZone;
+    use LWP::UserAgent;
 
     my $yr = Weather::YR->new(
         lat => 63.590833,
         lon => 10.741389,
         tz  => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
+        ua  => LWP::UserAgent->new(
+            agent => 'AcmeWeatherApp/0.9 support@example.com'
+        ),
     );
 
     foreach my $day ( @{$yr->location_forecast->days} ) {
