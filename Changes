@@ -1,5 +1,8 @@
 Revision history for Perl extension Weather::YR.
 
+0.41  2021-10-13
+      - Updated the README with the correct documentation.
+
 0.40  2021-10-13
       - Added support for English symbol names.
       - Fixed a deep recursion bug.

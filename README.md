@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 # VERSION
 
-Version 0.38.
+Version 0.40.
 
 # SYNOPSIS
 
@@ -50,7 +50,7 @@ This is an object-oriented interface to Yr.no's free weather service located at
 
 ## location\_forecast
 
-Returns a [Weather::YR::LocationForecast](https://metacpan.org/pod/Weather::YR::LocationForecast) instance.
+Returns a [Weather::YR::LocationForecast](https://metacpan.org/pod/Weather%3A%3AYR%3A%3ALocationForecast) instance.
 
 # TODO
 
@@ -67,12 +67,13 @@ the github interface at [https://github.com/toreau/Weather-YR/issues](https://gi
 
 # AUTHORS
 
-- Tore Aursand, 2014-2016, `toreau@gmail.com`
+- Tore Aursand, 2014-2021, `toreau@gmail.com`
+- Mike Katasonov, 2021, `kabanoid@cpan.org`
 - Knut-Olav Hoven, 2008-2014, `knut-olav@hoven.ws`
 
 # LICENSE AND COPYRIGHT
 
-Copyright 2014-2016, ABC Startsiden.
+Copyright 2014-2021, Tore Aursand.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
