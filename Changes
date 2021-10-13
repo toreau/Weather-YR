@@ -1,6 +1,8 @@
 Revision history for Perl extension Weather::YR.
 
 0.43  2021-10-13
+      - Added the English symbol texts again. Not sure where they went after
+        they were added in version 0.40. :-/
       - Improved (hopefully) the example code.
       - Misc. minor cleanups/fixes.
 
