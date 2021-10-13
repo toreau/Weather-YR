@@ -13,11 +13,11 @@ Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 =head1 VERSION
 
-Version 0.39.
+Version 0.40.
 
 =cut
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 
 =head1 SYNOPSIS
 
@@ -134,7 +134,7 @@ the github interface at L<https://github.com/toreau/Weather-YR/issues>.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2014-2016, Tore Aursand.
+Copyright 2014-2021, Tore Aursand.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
