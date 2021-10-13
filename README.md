@@ -4,29 +4,31 @@ Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 # VERSION
 
-Version 0.42.
+Version 0.43.
 
 # SYNOPSIS
 
     use Weather::YR;
     use DateTime::TimeZone;
     use LWP::UserAgent;
+    use feature 'say';
 
     my $yr = Weather::YR->new(
-        lat => 63.590833,
-        lon => 10.741389,
-        tz  => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
-        ua  => LWP::UserAgent->new(
-            agent => 'AcmeWeatherApp/0.9 support@example.com'
+        lang => 'en',
+        lat  => 63.590833,
+        lon  => 10.741389,
+        tz   => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
+        ua   => LWP::UserAgent->new(
+            agent => 'AcmeWeatherApp/0.9 support@example.com',
         ),
     );
 
     foreach my $day ( @{$yr->location_forecast->days} ) {
-        say $day->date . ':';
-        say ' ' x 4 . 'Temperature = ' . $day->temperature->celsius;
+        say 'Weather data for ' . $day->date->ymd . ':';
+        say ' ' x 4 . 'Temperature @ ' . $day->temperature->from->hms . ': ' . $day->temperature->celsius;
 
         foreach my $dp ( @{$day->datapoints} ) {
-            say ' ' x 4 . 'Wind direction: ' . $dp->wind_direction->name;
+            say ' ' x 4 . 'Wind direction @ ' . $dp->wind_direction->from->hms . ': ' . $dp->wind_direction->name;
         }
     }
 
