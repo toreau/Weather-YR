@@ -24,6 +24,7 @@ our $VERSION = '0.42';
     use Weather::YR;
     use DateTime::TimeZone;
     use LWP::UserAgent;
+    use feature 'say';
 
     my $yr = Weather::YR->new(
         lat => 63.590833,
