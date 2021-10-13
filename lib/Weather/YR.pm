@@ -37,10 +37,10 @@ our $VERSION = '0.43';
 
     foreach my $day ( @{$yr->location_forecast->days} ) {
         say 'Weather data for ' . $day->date->ymd . ':';
-        say ' ' x 4 . 'Temperature @ ' . $day->temperature->from . ': ' . $day->temperature->celsius;
+        say ' ' x 4 . 'Temperature @ ' . $day->temperature->from->hms . ': ' . $day->temperature->celsius;
 
         foreach my $dp ( @{$day->datapoints} ) {
-            say ' ' x 4 . 'Wind direction @ ' . $dp->wind_direction->from . ': ' . $dp->wind_direction->name;
+            say ' ' x 4 . 'Wind direction @ ' . $dp->wind_direction->from->hms . ': ' . $dp->wind_direction->name;
         }
     }
 
