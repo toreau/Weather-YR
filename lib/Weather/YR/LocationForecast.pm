@@ -79,7 +79,6 @@ sub _build_url {
     $url->query( lat => $self->lat, lon => $self->lon, altitude => $self->msl );
 
     return $url;
-    # return 'https://api.met.no/weatherapi/locationforecast/2.0/classic?lat=' . $self->lat . ';lon=' . $self->lon . ';altitude=' . $self->msl;
 }
 
 =head2 schema_url
