@@ -126,6 +126,19 @@ sub date_to_datetime {
     return $date;
 }
 
+sub lat_as_string {
+    my $self = shift;
+
+    my $lat = $self->lat;
+    return defined $lat ? sprintf "%.4f", $lat : '';
+}
+
+sub lon_as_string {
+    my $self = shift;
+
+    my $lon = $self->lon;
+    return defined $lon ? sprintf "%.4f", $lon : '';
+}
 
 __PACKAGE__->meta->make_immutable;
 

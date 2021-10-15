@@ -15,7 +15,11 @@ sub _build_url {
 
     my $url = $self->service_url->clone;
     $url->path ( '/weatherapi/textlocation/1.0/' );
-    $url->query( latitude => $self->lat, longitude => $self->lon, language => $self->lang );
+    $url->query(
+        latitude  => $self->lat_as_string,
+        longitude => $self->lon_as_string,
+        language  => $self->lang
+    );
 
     return $url;
 }
