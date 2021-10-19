@@ -60,7 +60,7 @@ want to retrieve the XML from YR.no yourself;
 
     my $url = $yr->location_forecast->url;
 
-    my $xml = My FancyHttpClient->new->get( $url );
+    my $xml = MyFancyHttpClient->new->get( $url );
 
     my $yr = Weather::YR->new(
         xml => $xml,
@@ -77,9 +77,9 @@ sub _build_url {
     my $url = $self->service_url->clone;
     $url->path ( '/weatherapi/locationforecast/2.0/classic' );
     $url->query(
-        lat      => $self->lat_as_string,
-        lon      => $self->lon_as_string,
-        altitude => $self->msl
+        lat      => $self->lat,
+        lon      => $self->lon,
+        altitude => $self->msl,
     );
 
     return $url;
@@ -113,10 +113,6 @@ sub _build_datapoints {
     my @datapoints = ();
 
     if ( my $xml_ref = $self->xml_ref ) {
-        # use Data::Dumper;
-        # print STDOUT Dumper( $xml_ref );
-        # die;
-        # my $times     = $xml_ref->{weatherdata}->{product}->{time} || [];
         my $times     = $xml_ref->{product}->{time} || [];
         my $datapoint = undef;
 

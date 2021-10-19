@@ -18,7 +18,7 @@ has 'service_url' => (
 );
 
 has [ 'lat', 'lon', 'msl' ] => (
-    isa      => 'Maybe[Num]',
+    isa      => 'Num',
     is       => 'rw',
     required => 0,
     default  => 0,
@@ -31,10 +31,10 @@ has 'xml' => (
 );
 
 has 'lang' => (
-    isa      => 'Maybe[Str]',
+    isa      => 'Str',
     is       => 'rw',
     required => 0,
-    default  => 'nb',
+    default  => 'en',
 );
 
 has 'tz' => (
@@ -56,6 +56,18 @@ has 'xml_ref' => (
     is         => 'ro',
     lazy_build => 1,
 );
+
+# Make sure that 'lat' and 'lon' is restricted to four decimals, ref.
+# https://api.met.no/doc/TermsOfService#traffic
+around [ 'lat', 'lon' ] => sub {
+    my $orig  = shift;
+    my $self  = shift;
+    my $value = shift || $self->$orig;
+
+    $value = sprintf( '%0.4f', $value );
+
+    return $self->$orig( $value );
+};
 
 sub _build_xml_ref {
     my $self = shift;
@@ -92,7 +104,6 @@ sub _build_xml_ref {
                 my $result = undef;
 
                 eval {
-                    # $result = XML::Bare->new( text => $self->xml )->parse;
                     $result = XML::Simple::XMLin( $self->xml, ForceArray => 0 );
                 };
 
@@ -124,20 +135,6 @@ sub date_to_datetime {
     $date->set_time_zone( $self->tz );
 
     return $date;
-}
-
-sub lat_as_string {
-    my $self = shift;
-
-    my $lat = $self->lat;
-    return defined $lat ? sprintf "%.4f", $lat : '';
-}
-
-sub lon_as_string {
-    my $self = shift;
-
-    my $lon = $self->lon;
-    return defined $lon ? sprintf "%.4f", $lon : '';
 }
 
 __PACKAGE__->meta->make_immutable;

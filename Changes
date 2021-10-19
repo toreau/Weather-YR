@@ -1,5 +1,9 @@
 Revision history for Perl extension Weather::YR.
 
+0.45  2021-10-19
+      - Make English the default symbol language.
+      - Minor code cleanup.
+
 0.44  2021-10-19
       - Added Germany symbol texts. (PR #9, voegelas)
       - Added LWP::Protocol::https as requirement. (PR #8, voegelas)
