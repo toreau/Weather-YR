@@ -54,8 +54,8 @@ Returns the URL to YR.no's location forecast service. This is handy if you
 want to retrieve the XML from YR.no yourself;
 
     my $yr = Weather::YR->new(
-        lat => 63.590833,
-        lon => 10.741389,
+        lat => 63.5908,
+        lon => 10.7414,
     );
 
     my $url = $yr->location_forecast->url;
@@ -76,7 +76,11 @@ sub _build_url {
 
     my $url = $self->service_url->clone;
     $url->path ( '/weatherapi/locationforecast/2.0/classic' );
-    $url->query( lat => $self->lat, lon => $self->lon, altitude => $self->msl );
+    $url->query(
+        lat      => $self->lat_as_string,
+        lon      => $self->lon_as_string,
+        altitude => $self->msl
+    );
 
     return $url;
 }
