@@ -7,6 +7,8 @@ extends 'Weather::YR::Base';
 use Weather::YR::LocationForecast;
 use Weather::YR::TextLocation;
 
+=encoding utf8
+
 =head1 NAME
 
 Weather::YR - Object-oriented interface to Yr.no's weather service.
