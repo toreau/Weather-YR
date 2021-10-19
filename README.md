@@ -59,7 +59,6 @@ Returns a [Weather::YR::LocationForecast](https://metacpan.org/pod/Weather%3A%3A
 - Improve the documentation.
 - Add more tests.
 - Add support for more of Yr.no's APIs.
-- Translate wind speed names/descriptions.
 
 # BUGS
 
