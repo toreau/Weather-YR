@@ -1,5 +1,10 @@
 Revision history for Perl extension Weather::YR.
 
+0.44  2021-10-19
+      - Added Germany symbol texts. (PR #9, voegelas)
+      - Added LWP::Protocol::https as requirement. (PR #8, voegelas)
+      - Limit latitude and longitude to four decimals. (PR #7, voegelas)
+
 0.43  2021-10-13
       - Added the English symbol texts again. Not sure where they went after
         they were added in version 0.40. :-/

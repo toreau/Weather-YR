@@ -4,7 +4,7 @@ Weather::YR - Object-oriented interface to Yr.no's weather service.
 
 # VERSION
 
-Version 0.43.
+Version 0.44.
 
 # SYNOPSIS
 
@@ -15,8 +15,8 @@ Version 0.43.
 
     my $yr = Weather::YR->new(
         lang => 'en',
-        lat  => 63.590833,
-        lon  => 10.741389,
+        lat  => 63.5908,
+        lon  => 10.7414,
         tz   => DateTime::TimeZone->new( name => 'Europe/Oslo' ),
         ua   => LWP::UserAgent->new(
             agent => 'AcmeWeatherApp/0.9 support@example.com',
